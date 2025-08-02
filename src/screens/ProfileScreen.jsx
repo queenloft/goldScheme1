@@ -11,28 +11,8 @@ import {
   Dimensions,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import {FONTS, COLORS} from '@src/config/index'
+import {FONTS,FONT_SIZES,SCREEN_HEIGHT,SCREEN_WIDTH,widthPercentageToDP, heightPercentageToDP, COLORS} from '@src/config/index'
 
-// --- Responsive Design Helpers ---
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-
-const widthPercentageToDP = (widthPercent) => {
-  const elemWidth = typeof widthPercent === 'number' ? widthPercent : parseFloat(widthPercent);
-  return (SCREEN_WIDTH * elemWidth) / 100;
-};
-
-const heightPercentageToDP = (heightPercent) => {
-  const elemHeight = typeof heightPercent === 'number' ? heightPercent : parseFloat(heightPercent);
-  return (SCREEN_HEIGHT * elemHeight) / 100;
-};
-
-
-const FONT_SIZES = {
-  title: widthPercentageToDP('6%'),
-  subtitle: widthPercentageToDP('4.5%'),
-  body: widthPercentageToDP('4%'),
-  caption: widthPercentageToDP('3.5%'),
-};
 
 // --- Mock Data ---
 // In a real app, this data would come from your user state or API

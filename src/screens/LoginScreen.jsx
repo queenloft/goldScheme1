@@ -9,58 +9,10 @@ import {
   ScrollView,
   StatusBar,
   Image,
-  Dimensions,
-  Platform,
   Alert,
 } from 'react-native';
-import {FONTS, COLORS} from '@src/config/index'
-// --- Navigation Imports ---
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {FONTS,FONT_SIZES,SCREEN_HEIGHT,SCREEN_WIDTH,widthPercentageToDP, heightPercentageToDP, COLORS} from '@src/config/index'
 
-/*
-* --- HOW TO ADD CUSTOM FONTS (Poppins) ---
-*
-* 1. Download Font Files: Go to Google Fonts and download the Poppins font family.
-*
-* 2. Create Asset Folder: In the root of your React Native project, create a folder structure: `./assets/fonts/`
-*
-* 3. Add Fonts: Copy the `.ttf` font files (e.g., Poppins-Regular.ttf, Poppins-Medium.ttf, Poppins-Bold.ttf) into the `./assets/fonts/` folder.
-*
-* 4. Link Fonts: In your terminal, at the root of your project, run the command:
-* npx react-native-asset
-*
-* 5. Rebuild Your App: You must rebuild the app for the fonts to be included.
-* npx react-native run-android
-* or
-* npx react-native run-ios
-*
-*/
-
-
-// --- Responsive Design Helpers ---
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-
-const widthPercentageToDP = (widthPercent) => {
-  const elemWidth = typeof widthPercent === 'number' ? widthPercent : parseFloat(widthPercent);
-  return (SCREEN_WIDTH * elemWidth) / 100;
-};
-
-const heightPercentageToDP = (heightPercent) => {
-  const elemHeight = typeof heightPercent === 'number' ? heightPercent : parseFloat(heightPercent);
-  return (SCREEN_HEIGHT * elemHeight) / 100;
-};
-
-
-
-
-
-const FONT_SIZES = {
-  title: widthPercentageToDP('7%'),
-  subtitle: widthPercentageToDP('5%'),
-  body: widthPercentageToDP('4%'),
-  caption: widthPercentageToDP('3.5%'), // Slightly increased for better readability
-};
 
 // --- Mock Data (Localized for India) ---
 const MOCK_GOLD_PRICE_INR_PER_GRAM = 7250.75;
@@ -151,7 +103,7 @@ const LoginScreen = ({ navigation }) => {
       return;
     }
     console.log('Login attempt with:', mobileNumber);
-    navigation.replace('Home', { user: MOCK_USER });
+    navigation.replace('MainApp', { user: MOCK_USER });
   };
 
   return (

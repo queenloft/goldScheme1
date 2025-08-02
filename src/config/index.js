@@ -1,4 +1,5 @@
 // --- Font Definitions ---
+import { Dimensions } from 'react-native'
 export const FONTS = {
     PoppinsBold: 'Poppins-Bold',
     PoppinsMedium: 'Poppins-Medium',
@@ -34,3 +35,35 @@ export const COLORS = {
   success: '#28a745',
   danger: '#dc3545',
 };
+
+// --- Responsive Design Helpers ---
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+
+
+
+export const widthPercentageToDP = (widthPercent) => {
+  const elemWidth = typeof widthPercent === 'number' ? widthPercent : parseFloat(widthPercent);
+  return (SCREEN_WIDTH * elemWidth) / 100;
+};
+
+export const heightPercentageToDP = (heightPercent) => {
+  const elemHeight = typeof heightPercent === 'number' ? heightPercent : parseFloat(heightPercent);
+  return (SCREEN_HEIGHT * elemHeight) / 100;
+};
+
+export const FONT_SIZES = {
+  title: widthPercentageToDP('6%'),
+  subtitle: widthPercentageToDP('4.5%'),
+  body: widthPercentageToDP('4%'),
+  caption: widthPercentageToDP('3.5%'),
+  small: widthPercentageToDP('3%'),
+};
+
+export {
+  SCREEN_WIDTH,
+  SCREEN_HEIGHT,
+}
+
+
+
+
