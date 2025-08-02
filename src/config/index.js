@@ -21,3 +21,16 @@ export const FONTS = {
     PoppinsExtraBoldItalic: 'Poppins-ExtraBoldItalic',
     PoppinsBlackItalic: 'Poppins-BlackItalic',
 }
+
+export const COLORS = {
+  primary: '#f0f4f7',
+  primaryDark: '#1a1a1a',
+  secondary: '#FFFFFF',
+  accent: '#FFD700',
+  theme: '#321deaff',
+  text: '#1a1a1a',
+  textLight: '#FFFFFF',
+  textSecondary: '#6c757d',
+  success: '#28a745',
+  danger: '#dc3545',
+};
