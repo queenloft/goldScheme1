@@ -1,0 +1,23 @@
+// --- Font Definitions ---
+export const FONTS = {
+    PoppinsBold: 'Poppins-Bold',
+    PoppinsMedium: 'Poppins-Medium',
+    PoppinsRegular: 'Poppins-Regular',
+    PoppinsLight: 'Poppins-Light',
+    PoppinsExtraLight: 'Poppins-ExtraLight',
+    PoppinsBlack: 'Poppins-Black',
+    PoppinsThin: 'Poppins-Thin',    
+    PoppinsExtraBold: 'Poppins-ExtraBold',
+    PoppinsSemiBold: 'Poppins-SemiBold',
+    PoppinsItalic: 'Poppins-Italic',
+    PoppinsMediumItalic: 'Poppins-MediumItalic',
+    PoppinsBoldItalic: 'Poppins-BoldItalic',
+    PoppinsLightItalic: 'Poppins-LightItalic',
+    PoppinsExtraLightItalic: 'Poppins-ExtraLightItalic',
+    PoppinsBlackItalic: 'Poppins-BlackItalic',
+    PoppinsThinItalic: 'Poppins-ThinItalic',
+    PoppinsExtraBoldItalic: 'Poppins-ExtraBoldItalic',
+    PoppinsSemiBoldItalic: 'Poppins-SemiBoldItalic',
+    PoppinsExtraBoldItalic: 'Poppins-ExtraBoldItalic',
+    PoppinsBlackItalic: 'Poppins-BlackItalic',
+}
