@@ -7,20 +7,8 @@ import HomeScreen from '@src/screens/HomeScreen';
 import ProfileScreen from '@src/screens/ProfileScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {FONTS, COLORS, widthPercentageToDP,FONT_SIZES, heightPercentageToDP} from '@src/config/index'
-import { 
-    Home, 
-    PiggyBank, 
-    PlusSquare, 
-    User, 
-    Menu, 
-    ArrowLeft,
-    CircleDollarSign,
-    Gem,
-    Sparkles,
-    HelpCircle,
-    Landmark,
-    Camera
-} from 'lucide-react-native';
+import RenderIcon from '@src/components/icon';
+
 const Tab = createBottomTabNavigator();
 
 function AppTabs() {
@@ -30,12 +18,12 @@ function AppTabs() {
                 headerShown: false,
                 tabBarIcon: ({ focused, color, size }) => {
                     let IconComponent;
-                    if (route.name === 'Home') IconComponent = Home;
-                    else if (route.name === 'My Plan') IconComponent = PiggyBank;
-                    else if (route.name === 'Join Plan') IconComponent = PlusSquare;
-                    else if (route.name === 'Profile') IconComponent = User;
+                    if (route.name === 'Home') IconComponent = "home";
+                    else if (route.name === 'My Plan') IconComponent = "calendar";
+                    else if (route.name === 'Join Plan') IconComponent = "plus";
+                    else if (route.name === 'Profile') IconComponent = "user";
                     
-                    return <IconComponent color={color} size={focused ? 28 : 24} />;
+                    return <RenderIcon name={IconComponent} color={color} size={focused ? 28 : 24} />;
                 },
                 tabBarActiveTintColor: COLORS.theme,
                 tabBarInactiveTintColor: COLORS.textSecondary,

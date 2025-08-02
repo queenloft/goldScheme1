@@ -22,7 +22,7 @@ const MOCK_USER_PROFILE = {
     email: 'sakthivel9393@gmail.com',
     dob: '__-__-____',
     anniversary: '__-__-____',
-    avatar: 'https://placehold.co/100x100/EBF4FF/76A9EA?text=SS' // Placeholder avatar
+     avatar: 'https://picsum.photos/seed/useravatar/100/100',
 };
 
 
@@ -46,18 +46,13 @@ export default function ProfileScreen() {
       
       {/* Custom Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-             {/* Use a proper icon library like react-native-vector-icons in a real app */}
-            <Text style={styles.backButtonText}>←</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>K. Chinnadurai</Text>
-        <Text style={styles.headerVersion}>AV: 1.7.0</Text>
+        <Text style={styles.headerTitle}>Profile</Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {/* Profile Title Bar */}
         <View style={styles.profileTitleBar}>
-            <Text style={styles.profileTitle}>Profile</Text>
+            <Text style={styles.profileTitle}></Text>
         </View>
 
         {/* Main Content Area */}
@@ -95,7 +90,10 @@ export default function ProfileScreen() {
                     <Text style={styles.actionTextTheme}>Change MPIN?</Text>
                 </TouchableOpacity>
             </View>
+
+            
         </View>
+        <Text style={styles.headerVersion}>AV: 1.7.0</Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -114,13 +112,13 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     paddingHorizontal: widthPercentageToDP('4%'),
-    paddingVertical: heightPercentageToDP('1.5%'),
+    paddingVertical: heightPercentageToDP('2.5%'),
     backgroundColor: COLORS.theme,
     paddingTop: 50,
-    borderBottomLeftRadius: 25,
-    borderBottomRightRadius: 25,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
   },
   backButton: {
     padding: 5,
@@ -133,6 +131,7 @@ const styles = StyleSheet.create({
     color: COLORS.textLight,
     fontFamily: FONTS.PoppinsBold,
     fontSize: FONT_SIZES.subtitle,
+
   },
   headerVersion: {
     color: COLORS.textLight,

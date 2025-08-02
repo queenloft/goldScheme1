@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useCallback, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,11 +9,12 @@ import {
   StatusBar,
   Image,
   Dimensions,
+  FlatList
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import PromoCarousel from '@src/components/banner';
 import {FONTS,FONT_SIZES,SCREEN_HEIGHT,SCREEN_WIDTH,widthPercentageToDP, heightPercentageToDP, COLORS} from '@src/config/index'
-
+import Banner from '@assets/banner.jpg'
+import RenderIcon from '@src/components/icon';
 
 
 
@@ -22,12 +23,19 @@ const MOCK_USER = {
     name: 'Sathish Shalini',
     goldBalance: 9290.00,
     silverBalance: 123.00,
-    avatar: 'https://placehold.co/100x100/EBF4FF/76A9EA?text=SS'
+    avatar: 'https://picsum.photos/seed/useravatar/100/100'
 };
 
 const MOCK_TRANSACTIONS = [
     {
         id: '1',
+        type: 'MONTHLY SCHEME',
+        amount: 20000.00,
+        date: '18-Jul-2025',
+        ref: 'AM-74'
+    },
+    {
+        id: '2',
         type: 'MONTHLY SCHEME',
         amount: 20000.00,
         date: '18-Jul-2025',
@@ -45,7 +53,7 @@ const MOCK_BANNERS = [
 const ActionIcon = ({ icon, label, onPress }) => (
     <TouchableOpacity style={styles.actionIconContainer} onPress={onPress}>
         <View style={styles.actionIconCircle}>
-            <Text style={styles.actionIconText}>{icon}</Text>
+            <RenderIcon name={icon} size={22} />
         </View>
         <Text style={styles.actionIconLabel}>{label}</Text>
     </TouchableOpacity>
@@ -55,6 +63,32 @@ const ActionIcon = ({ icon, label, onPress }) => (
 // This would be in its own file, e.g., `screens/DashboardScreen.js`
 export default function DashboardScreen() {
   const navigation = useNavigation();
+   const flatListRef = React.useRef(null);
+    const [activeIndex, setActiveIndex] = useState(0);
+
+       const onViewableItemsChanged = useCallback(({ viewableItems }) => {
+        if (viewableItems.length > 0) {
+            setActiveIndex(viewableItems[0].index);
+        }
+    }, []);
+
+    const viewabilityConfig = {
+        itemVisiblePercentThreshold: 50,
+    };
+
+      // --- Render each banner slide ---
+    const renderBanner = ({ item }) => {
+        return (
+            <View style={styles.promoBanner}>
+                <Image 
+                    source={Banner} 
+                    style={styles.promoImage}
+                    resizeMode="cover"
+                />
+            </View>
+        );
+    };
+
 
   return (
     <SafeAreaView style={styles.root}>
@@ -97,19 +131,39 @@ export default function DashboardScreen() {
 
         {/* Action Icons */}
         <View style={styles.actionsRow}>
-            <ActionIcon icon="➕" label="Join Plan" onPress={() => {}} />
-            <ActionIcon icon="🐷" label="My Plan" onPress={() => {}} />
-            <ActionIcon icon="👤" label="My Profile" onPress={() => navigation.navigate('Profile')} />
-            <ActionIcon icon="ℹ️" label="Help Center" onPress={() => {}} />
+            <ActionIcon icon="plus" label="Join Plan" onPress={() => {}} />
+            <ActionIcon icon="suitcase" label="My Plan" onPress={() => {}} />
+            <ActionIcon icon="user" label="My Profile" onPress={() => navigation.navigate('Profile')} />
+            <ActionIcon icon="bell" label="Notifications" onPress={() => {}} />
         </View>
 
         {/* Promo Banner */}
-        <View style={styles.promoBanner}>
-            <PromoCarousel 
-            MOCK_BANNERS={MOCK_BANNERS}
+           <View style={styles.carouselContainer}>
+            <FlatList
+                ref={flatListRef}
+                data={MOCK_BANNERS}
+                renderItem={renderBanner}
+                keyExtractor={(item) => item.id}
+                horizontal
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                onViewableItemsChanged={onViewableItemsChanged}
+                viewabilityConfig={viewabilityConfig}
             />
-             
+            {/* Custom Pagination */}
+            <View style={styles.paginationContainer}>
+                {MOCK_BANNERS.map((_, index) => (
+                    <View
+                        key={index}
+                        style={[
+                            styles.paginationDot,
+                            { backgroundColor: index === activeIndex ? COLORS.theme : COLORS.textSecondary }
+                        ]}
+                    />
+                ))}
+            </View>
         </View>
+
 
         {/* Latest Transactions */}
         <View style={styles.transactionsContainer}>
@@ -265,6 +319,37 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: heightPercentageToDP('1%'),
   },
+    carouselContainer: {
+    marginTop: heightPercentageToDP('3%'),
+    height: heightPercentageToDP('15%'),
+    marginHorizontal: 16
+  },
+  promoBanner: {
+    width: SCREEN_WIDTH-32,
+    height: heightPercentageToDP('16%'),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 35,
+    backgroundColor:'red'
+  },
+  promoImage: {
+       borderRadius: 35,
+
+  },
+  paginationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: heightPercentageToDP('1%'),
+    alignSelf: 'center',
+  },
+  paginationDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginHorizontal: 4,
+  },
   actionIconText: {
     fontSize: FONT_SIZES.title,
   },
@@ -272,14 +357,6 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.PoppinsMedium,
     fontSize: FONT_SIZES.caption,
     color: COLORS.text,
-  },
-  // Promo Banner
-  promoBanner: {
-    marginHorizontal: widthPercentageToDP('4%'),
-    marginTop: heightPercentageToDP('3%'),
-    borderRadius: 15,
-    overflow: 'hidden',
-    height: heightPercentageToDP('15%'),
   },
   promoImage: {
     width: '100%',
@@ -317,6 +394,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 5,
     elevation: 2,
+    marginBottom:16
   },
   transactionIconContainer: {
     backgroundColor: COLORS.lightGold,

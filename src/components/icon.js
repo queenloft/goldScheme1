@@ -1,9 +1,8 @@
-import { icons } from 'lucide-react-native';
+import {FontAwesome } from '@react-native-vector-icons/fontawesome';
 
-const Icon = ({ name, color, size }) => {
-  const LucideIcon = icons[name];
 
-  return <LucideIcon color={color} size={size} />;
+const RenderIcon = ({ name, color, size }) => {
+  return <FontAwesome  name={name} color={color} size={size} />;
 };
 
-export default Icon;
+export default RenderIcon;
