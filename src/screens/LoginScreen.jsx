@@ -106,6 +106,16 @@ const LoginScreen = ({ navigation }) => {
     navigation.replace('MainApp', { user: MOCK_USER });
   };
 
+    const handleOTPLogin = () => {
+ if (mobileNumber.length !== 10) {
+      Alert.alert("Invalid Input", "Please enter a valid 10-digit mobile number.");
+      return;
+    }
+    console.log('Login attempt with:', mobileNumber);
+    navigation.navigate('OTPScreen', { user: MOCK_USER });
+
+    }
+
   return (
     <SafeAreaView style={styles.loginRoot}>
       <StatusBar barStyle="light-content" backgroundColor={COLORS.theme} />
@@ -136,7 +146,7 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.loginButtonText}>LOGIN</Text>
           </TouchableOpacity>
           <Text style={styles.orText}>(OR)</Text>
-          <TouchableOpacity style={[styles.loginButton, styles.otpButton]} onPress={handleLogin}>
+          <TouchableOpacity style={[styles.loginButton, styles.otpButton]} onPress={handleOTPLogin}>
             <Text style={styles.otpButtonText}>LOGIN WITH OTP</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('ChangeMpin')}>
