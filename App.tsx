@@ -7,6 +7,7 @@ import LoginScreen from '@src/screens/LoginScreen';
 import ChangeMpinScreen from '@src/screens/MPinScreen';
 import OTPScreen from '@src/screens/OTPScreen';
 import ProfileScreen from '@src/screens/ProfileScreen';
+import MyPlanScreen from '@src/screens/MyPlanScreen';
 import GoldInvestmentTracker from '@src/screens/SchemeDetail';
 
 const Stack = createNativeStackNavigator();
@@ -25,9 +26,9 @@ function App() {
             component={AppTabs}
             options={{ headerShown: false }}
         />
-
+        <Stack.Screen name="MyPlan" component={MyPlanScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Home" component={HomeScreen}  />
+        <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen}  />
         <Stack.Screen name="ChangeMpin" component={ChangeMpinScreen}  />
                 <Stack.Screen name="OTPScreen" component={OTPScreen}  />

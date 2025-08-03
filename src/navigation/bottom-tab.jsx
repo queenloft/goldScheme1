@@ -8,6 +8,7 @@ import ProfileScreen from '@src/screens/ProfileScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {FONTS, COLORS, widthPercentageToDP,FONT_SIZES, heightPercentageToDP} from '@src/config/index'
 import RenderIcon from '@src/components/icon';
+import FontAwesome from '@react-native-vector-icons/fontawesome';
 
 const Tab = createBottomTabNavigator();
 
@@ -23,7 +24,7 @@ function AppTabs() {
                     else if (route.name === 'Join Plan') IconComponent = "plus";
                     else if (route.name === 'Profile') IconComponent = "user";
                     
-                    return <RenderIcon name={IconComponent} color={color} size={focused ? 28 : 24} />;
+                    return <FontAwesome name={IconComponent} color={color} size={focused ? 28 : 24} />;
                 },
                 tabBarActiveTintColor: COLORS.theme,
                 tabBarInactiveTintColor: COLORS.textSecondary,

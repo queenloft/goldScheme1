@@ -173,7 +173,7 @@ const GoldInvestmentTracker = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.accent,
+    backgroundColor: COLORS.primary,
   },
   header: {
     flexDirection: 'row',
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: COLORS.theme,
-    height: heightPercentageToDP('10%'),
+    height: heightPercentageToDP('12%'),
     borderBottomLeftRadius: widthPercentageToDP('15%'),
     borderBottomRightRadius: widthPercentageToDP('15%'),
     paddingTop: heightPercentageToDP('5%'),
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 15,
+    paddingTop: 15,
   },
   syncLabel: {
     color: COLORS.textSecondary,
@@ -263,13 +263,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    marginTop:12
+
   },
   customerRight: {
     alignItems: 'flex-end',
   },
   label: {
-    color: COLORS.accent,
+    color: COLORS.textSecondary,
     fontSize: FONT_SIZES.small,
     marginBottom: 2,
   },
@@ -392,7 +393,7 @@ const styles = StyleSheet.create({
     color: COLORS.theme,
   },
   transactionCard: {
-    backgroundColor: COLORS.secondary,
+    backgroundColor: COLORS.primary,
     borderRadius: 15,
     padding: widthPercentageToDP('4%'),
     flexDirection: 'row',
@@ -405,9 +406,9 @@ const styles = StyleSheet.create({
     marginBottom:16
   },
   transactionIconContainer: {
-    backgroundColor: COLORS.lightGold,
+    backgroundColor: COLORS.secondary,
     padding: widthPercentageToDP('3%'),
-    borderRadius: 10,
+    borderRadius: 25,
     marginRight: widthPercentageToDP('4%'),
   },
   transactionIcon: {

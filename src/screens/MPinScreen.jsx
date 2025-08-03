@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: COLORS.theme,
-    height: heightPercentageToDP('10%'),
+    height: heightPercentageToDP('12%'),
     borderBottomLeftRadius: widthPercentageToDP('15%'),
     borderBottomRightRadius: widthPercentageToDP('15%'),
     paddingTop: heightPercentageToDP('5%'),

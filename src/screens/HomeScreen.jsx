@@ -53,7 +53,7 @@ const MOCK_BANNERS = [
 const ActionIcon = ({ icon, label, onPress }) => (
     <TouchableOpacity style={styles.actionIconContainer} onPress={onPress}>
         <View style={styles.actionIconCircle}>
-            <RenderIcon name={icon} size={22} />
+            <RenderIcon name={icon} size={22} onPress={onPress}/>
         </View>
         <Text style={styles.actionIconLabel}>{label}</Text>
     </TouchableOpacity>
@@ -132,7 +132,7 @@ export default function DashboardScreen() {
         {/* Action Icons */}
         <View style={styles.actionsRow}>
             <ActionIcon icon="plus" label="Join Plan" onPress={() => {}} />
-            <ActionIcon icon="suitcase" label="My Plan" onPress={() => {}} />
+            <ActionIcon icon="suitcase" label="My Plan" onPress={() => navigation.navigate('MyPlan')} />
             <ActionIcon icon="user" label="My Profile" onPress={() => navigation.navigate('Profile')} />
             <ActionIcon icon="bell" label="Notifications" onPress={() => {}} />
         </View>
