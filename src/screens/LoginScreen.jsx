@@ -139,7 +139,7 @@ const LoginScreen = ({ navigation }) => {
           <TouchableOpacity style={[styles.loginButton, styles.otpButton]} onPress={handleLogin}>
             <Text style={styles.otpButtonText}>LOGIN WITH OTP</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('ChangeMpin')}>
               <Text style={styles.forgotPasswordText}>Forgot MPIN?</Text>
           </TouchableOpacity>
         </View>
