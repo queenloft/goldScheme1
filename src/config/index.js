@@ -38,6 +38,9 @@ export const COLORS = {
   progressBar: '#FF8C00',
   progressBackground: '#0f4c3a',
     orange: '#FF8C00',
+      digiGoldBg: '#f7bd4bff',
+  swarnaGradient: 'linear-gradient(135deg, #d2b617ff 0%, #FF8C00 100%)',
+  labamGradient: 'linear-gradient(135deg, #FFA726 0%, #FF7043 100%)',
 };
 
 // --- Responsive Design Helpers ---
@@ -54,14 +57,20 @@ export const heightPercentageToDP = (heightPercent) => {
   const elemHeight = typeof heightPercent === 'number' ? heightPercent : parseFloat(heightPercent);
   return (SCREEN_HEIGHT * elemHeight) / 100;
 };
+// Responsive font scaling
+const fontScale = SCREEN_WIDTH / 375; // Based on iPhone X width
+export const normalize = (size) => {
+  const newSize = size * fontScale;
+  return Math.max(newSize, size * 0.8); // Minimum scale factor
+};
+
 
 export const FONT_SIZES = {
   title: widthPercentageToDP('6%'),
   subtitle: widthPercentageToDP('4.5%'),
   body: widthPercentageToDP('4%'),
-  caption: widthPercentageToDP('3.5%'),
   small: widthPercentageToDP('3%'),
-    extraLarge: normalize(28),
+  extraLarge: normalize(28),
   large: normalize(24),
   title: normalize(20),
   subtitle: normalize(18),
@@ -76,12 +85,6 @@ export {
   SCREEN_HEIGHT,
 }
 
-// Responsive font scaling
-const fontScale = SCREEN_WIDTH / 375; // Based on iPhone X width
-export const normalize = (size) => {
-  const newSize = size * fontScale;
-  return Math.max(newSize, size * 0.8); // Minimum scale factor
-};
 
 
 

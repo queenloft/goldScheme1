@@ -77,7 +77,8 @@ export default function ProfileScreen() {
             <ProfileField label="Date of Anniversary" value={MOCK_USER_PROFILE.anniversary} />
 
             {/* Edit Button */}
-            <TouchableOpacity style={styles.editButton}>
+            <TouchableOpacity style={styles.editButton} 
+            onPress={() => navigation.navigate('EditProfile')}>
                 <Text style={styles.editButtonText}>EDIT PROFILE</Text>
             </TouchableOpacity>
 

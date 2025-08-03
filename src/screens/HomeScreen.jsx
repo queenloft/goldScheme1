@@ -131,7 +131,7 @@ export default function DashboardScreen() {
 
         {/* Action Icons */}
         <View style={styles.actionsRow}>
-            <ActionIcon icon="plus" label="Join Plan" onPress={() => {}} />
+            <ActionIcon icon="plus" label="Join Plan" onPress={() => navigation.navigate('JoinScheme')} />
             <ActionIcon icon="suitcase" label="My Plan" onPress={() => navigation.navigate('MyPlan')} />
             <ActionIcon icon="user" label="My Profile" onPress={() => navigation.navigate('Profile')} />
             <ActionIcon icon="bell" label="Notifications" onPress={() => {}} />
@@ -397,9 +397,9 @@ const styles = StyleSheet.create({
     marginBottom:16
   },
   transactionIconContainer: {
-    backgroundColor: COLORS.lightGold,
+    backgroundColor: COLORS.primary,
     padding: widthPercentageToDP('3%'),
-    borderRadius: 10,
+    borderRadius: 25,
     marginRight: widthPercentageToDP('4%'),
   },
   transactionIcon: {
