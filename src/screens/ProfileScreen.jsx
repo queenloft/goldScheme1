@@ -140,8 +140,9 @@ export default function ProfileScreen({route}) {
               <Text style={styles.actionTextTheme}>Change MPIN?</Text>
             </TouchableOpacity>
           </View>
+                  <Text style={styles.headerVersion}>AV: 1.7.0</Text>
+
         </View>
-        <Text style={styles.headerVersion}>AV: 1.7.0</Text>
 
         {/* The Modal Component */}
         <CustomModal
@@ -159,7 +160,7 @@ export default function ProfileScreen({route}) {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: COLORS.secondary,
+    backgroundColor: COLORS.theme,
   },
   scrollContainer: {
     flexGrow: 1,
@@ -190,9 +191,10 @@ const styles = StyleSheet.create({
 
   },
   headerVersion: {
-    color: COLORS.textLight,
+    color: COLORS.primaryDark,
     fontFamily: FONTS.PoppinsRegular,
     fontSize: FONT_SIZES.caption,
+    paddingTop:16
   },
   // Profile Title Bar
   profileTitleBar: {
