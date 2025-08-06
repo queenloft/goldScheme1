@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingTop: heightPercentageToDP('5%'),
+        paddingTop: heightPercentageToDP('6%'),
         paddingBottom: heightPercentageToDP('2%'),
         paddingHorizontal: widthPercentageToDP('5%'),
     },

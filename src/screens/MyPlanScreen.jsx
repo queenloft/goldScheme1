@@ -185,7 +185,11 @@ const GoldDashboard = ({navigation}) => {
         <View style={styles.statsRow}>
           <View style={styles.statCard}>
             <View style={styles.statIcon}>
-              <Text style={styles.statIconText}>📦</Text>
+              <RenderIcon
+              name="cube-outline"
+              size={24}
+              color={COLORS.text}
+              />
             </View>
             <Text style={styles.statTitle}>Schemes</Text>
             <Text style={styles.statNumber}>{totalSchemes}</Text>
@@ -193,7 +197,12 @@ const GoldDashboard = ({navigation}) => {
 
           <View style={styles.statCard}>
             <View style={styles.statIcon}>
-              <Text style={styles.statIconText}>⚖️</Text>
+              <RenderIcon
+              name="file-tray-outline"
+              size={24}
+              color={COLORS.primaryDark}
+              />
+
             </View>
             <Text style={styles.statTitle}>Balance Due</Text>
             <Text style={styles.statNumber}>{balanceDue}</Text>
@@ -287,12 +296,18 @@ const styles = StyleSheet.create({
   statsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: heightPercentageToDP('3%'),
+  marginBottom: heightPercentageToDP('3%'),
+        paddingTop: heightPercentageToDP('2%'),
+
     paddingHorizontal: widthPercentageToDP('2%'),
   },
   statCard: {
     alignItems: 'center',
     width: widthPercentageToDP('40%'),
+    backgroundColor: COLORS.secondary,
+    borderRadius: widthPercentageToDP('5%'),
+    padding: widthPercentageToDP('5%'),
+    justifyContent: 'center',
   },
   statIcon: {
     width: widthPercentageToDP('12%'),

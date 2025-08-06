@@ -151,8 +151,9 @@ const GoldInvestmentTracker = ({navigation}) => {
             {MOCK_TRANSACTIONS.map(tx => (
                 <View key={tx.id} style={styles.transactionCard}>
                     <View style={styles.transactionIconContainer}>
-                         <Text style={styles.transactionIcon}>🛕</Text>
-                    </View>
+<RenderIcon
+                      name="file-tray-outline"
+                      />                    </View>
                     <View style={styles.transactionDetails}>
                         <Text style={styles.transactionType}>{tx.type}</Text>
                         <Text style={styles.transactionDate}>{tx.date}</Text>
@@ -392,7 +393,7 @@ const styles = StyleSheet.create({
     color: COLORS.theme,
   },
   transactionCard: {
-    backgroundColor: COLORS.primary,
+    backgroundColor: COLORS.secondary,
     borderRadius: 15,
     padding: widthPercentageToDP('4%'),
     flexDirection: 'row',
@@ -405,7 +406,7 @@ const styles = StyleSheet.create({
     marginBottom:16
   },
   transactionIconContainer: {
-    backgroundColor: COLORS.secondary,
+    backgroundColor: COLORS.primary,
     padding: widthPercentageToDP('3%'),
     borderRadius: 25,
     marginRight: widthPercentageToDP('4%'),

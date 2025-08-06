@@ -28,7 +28,7 @@ export const CONSTANTS = {
 }
 
 export const COLORS = {
-  primary: '#f0f4f7',
+  primary: '#eaedefff',
   primaryDark: '#1a1a1a',
   secondary: '#FFFFFF',
   accent: '#e4e6fcff',

@@ -61,6 +61,7 @@ const JoinScheme = ({navigation}) => {
   const handleJoinNow = (scheme) => {
     console.log('Joining scheme:', scheme.type);
     // Handle join scheme logic here
+    navigation.navigate('Payment')
   };
 
   const renderSchemeCard = (scheme) => {

@@ -15,6 +15,8 @@ import { useNavigation } from '@react-navigation/native';
 import {FONTS,FONT_SIZES,SCREEN_HEIGHT,SCREEN_WIDTH,widthPercentageToDP, heightPercentageToDP, COLORS} from '@src/config/index'
 import Banner from '@assets/banner-1.png'
 import RenderIcon from '@src/components/icon';
+import Gold from '@assets/gold.jpg'
+import Silver from '@assets/silver.png'
 
 
 
@@ -113,7 +115,12 @@ export default function DashboardScreen() {
         {/* Balance Card */}
         <View style={styles.balanceCard}>
             <View style={styles.balanceSection}>
-                <Text style={styles.balanceIcon}>💰</Text>
+                {/* <Text style={styles.balanceIcon}>💰</Text> */}
+                <Image
+                    source={Gold}
+                    style={styles.balanceIcon}
+                    resizeMode="cover"
+                />
                 <View>
                     <Text style={styles.balanceLabel}>Gold</Text>
                     <Text style={styles.balanceValue}>₹ {MOCK_USER.goldBalance.toLocaleString('en-IN')}</Text>
@@ -121,7 +128,12 @@ export default function DashboardScreen() {
             </View>
             <View style={styles.balanceDivider} />
             <View style={styles.balanceSection}>
-                 <Text style={styles.balanceIcon}>🪙</Text>
+                   <Image
+                    source={Silver}
+                    style={styles.balanceIcon}
+                    resizeMode="cover"
+                />
+
                  <View>
                     <Text style={styles.balanceLabel}>Silver</Text>
                     <Text style={styles.balanceValue}>₹ {MOCK_USER.silverBalance.toLocaleString('en-IN')}</Text>
@@ -180,8 +192,10 @@ export default function DashboardScreen() {
             {MOCK_TRANSACTIONS.map(tx => (
                 <View key={tx.id} style={styles.transactionCard}>
                     <View style={styles.transactionIconContainer}>
-                         <Text style={styles.transactionIcon}>🛕</Text>
-                    </View>
+                      <RenderIcon
+                      name="file-tray-outline"
+                      />
+                      </View>
                     <View style={styles.transactionDetails}>
                         <Text style={styles.transactionType}>{tx.type}</Text>
                         <Text style={styles.transactionDate}>{tx.date}</Text>
@@ -287,7 +301,9 @@ const styles = StyleSheet.create({
   },
   balanceIcon: {
     fontSize: FONT_SIZES.title,
-    marginRight: widthPercentageToDP('2%'),
+    marginRight: widthPercentageToDP('4%'),
+    width:40,
+    height:40
   },
   balanceLabel: {
     fontFamily: FONTS.PoppinsRegular,
