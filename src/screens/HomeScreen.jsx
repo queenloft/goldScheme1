@@ -136,7 +136,9 @@ export default function DashboardScreen() {
             <ActionIcon icon="person" label="My Profile" onPress={() => navigation.navigate('Profile',{
               goBack:true
             })} />
-            <ActionIcon icon="notifications" label="Notifications" onPress={() => {}} />
+            <ActionIcon icon="notifications" label="Notifications" onPress={() => {
+              navigation.navigate('Notifications')
+            }} />
         </View>
 
         {/* Promo Banner */}

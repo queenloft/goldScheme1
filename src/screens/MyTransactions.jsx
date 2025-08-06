@@ -170,7 +170,11 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         alignItems: 'center',
         zIndex: 10,
-        elevation:10
+        elevation:10,
+                shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
     },
     titleText: {
         color: COLORS.primaryDark,

@@ -70,7 +70,7 @@ export default function ProfileScreen({route}) {
             size={24}
             onPress={() => navigation.goBack()}
             style={{
-              paddingLeft: 32,
+              paddingLeft: 6,
             }}
           />
         ):(
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: widthPercentageToDP('4%'),
-    paddingVertical: heightPercentageToDP('2.5%'),
+    paddingVertical: heightPercentageToDP('1.4%'),
     backgroundColor: COLORS.theme,
     paddingTop: 50,
     borderBottomLeftRadius: 40,
