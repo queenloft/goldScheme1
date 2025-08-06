@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {FONTS,FONT_SIZES,SCREEN_HEIGHT,SCREEN_WIDTH,widthPercentageToDP, heightPercentageToDP, COLORS} from '@src/config/index'
-import Banner from '@assets/banner.jpg'
+import Banner from '@assets/banner-1.png'
 import RenderIcon from '@src/components/icon';
 
 

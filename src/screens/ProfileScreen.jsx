@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import {FONTS,FONT_SIZES,SCREEN_HEIGHT,SCREEN_WIDTH,widthPercentageToDP, heightPercentageToDP, COLORS} from '@src/config/index'
 import CustomModal from '@src/components/modal';
 import RenderIcon from '@src/components/icon';
+import useAuthStore from '@src/hooks/useAuthStore';
 
 
 // --- Mock Data ---
@@ -41,12 +42,16 @@ const ProfileField = ({ label, value }) => (
 // This would be in its own file, e.g., `screens/ProfileScreen.js`
 export default function ProfileScreen({route}) {
   const navigation = useNavigation();
+    const { logout, user } = useAuthStore();
+
     const [modalVisible, setModalVisible] = useState(false);
   
     // Function to handle the "YES" press
     const handleDeleteConfirm = () => {
       console.log("Account deletion confirmed.");
       setModalVisible(false);
+      logout();
+      navigation.replace('Login');
       // Add your account deletion logic here
     };
   

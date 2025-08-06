@@ -12,6 +12,7 @@ import {
   Alert,
 } from 'react-native';
 import {FONTS,FONT_SIZES,SCREEN_HEIGHT,SCREEN_WIDTH,widthPercentageToDP, heightPercentageToDP, COLORS} from '@src/config/index'
+import useAuthStore from '@src/hooks/useAuthStore';
 
 
 // --- Mock Data (Localized for India) ---
@@ -96,6 +97,7 @@ const SchemeCard = ({ scheme, onPress }) => (
 
 const LoginScreen = ({ navigation }) => {
   const [mobileNumber, setMobileNumber] = useState('');
+    const { login } = useAuthStore();
 
   const handleLogin = () => {
     if (mobileNumber.length !== 10) {
@@ -103,6 +105,7 @@ const LoginScreen = ({ navigation }) => {
       return;
     }
     console.log('Login attempt with:', mobileNumber);
+    login(MOCK_USER, "1234567809876543212345678");
     navigation.replace('MainApp', { user: MOCK_USER });
   };
 
@@ -164,32 +167,6 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
-
-const SchemeDetailsScreen = ({ route }) => {
-    const { scheme } = route.params;
-
-    return (
-        <SafeAreaView style={styles.container}>
-            <StatusBar barStyle="dark-content" backgroundColor={COLORS.primary} />
-            <ScrollView contentContainerStyle={styles.scrollContent}>
-                <View style={styles.detailsCard}>
-                    <View style={styles.detailsHeader}>
-                        <Text style={styles.detailsIcon}>✨</Text>
-                        <Text style={styles.detailsTitle}>{scheme.name}</Text>
-                    </View>
-                    <Text style={styles.detailsDescription}>{scheme.details}</Text>
-                    <View style={styles.detailsRow}>
-                        <Text style={styles.detailsLabel}>Minimum Investment</Text>
-                        <Text style={styles.detailsValue}>₹{scheme.minInvestment.toLocaleString('en-IN')}</Text>
-                    </View>
-                     <TouchableOpacity style={styles.investButton}>
-                        <Text style={styles.investButtonText}>Invest Now</Text>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
-        </SafeAreaView>
-    );
-};
 
 export default LoginScreen;
 

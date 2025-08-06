@@ -79,7 +79,7 @@ android {
 
     namespace "com.goldscheme"
     defaultConfig {
-        applicationId "com.goldscheme"
+        applicationId "com.vipinfotech.goldscheme"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
