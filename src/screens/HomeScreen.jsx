@@ -131,10 +131,12 @@ export default function DashboardScreen() {
 
         {/* Action Icons */}
         <View style={styles.actionsRow}>
-            <ActionIcon icon="plus" label="Join Plan" onPress={() => navigation.navigate('JoinScheme')} />
-            <ActionIcon icon="suitcase" label="My Plan" onPress={() => navigation.navigate('MyPlan')} />
-            <ActionIcon icon="user" label="My Profile" onPress={() => navigation.navigate('Profile')} />
-            <ActionIcon icon="bell" label="Notifications" onPress={() => {}} />
+            <ActionIcon icon="add" label="Join Plan" onPress={() => navigation.navigate('JoinScheme')} />
+            <ActionIcon icon="bag-handle-sharp" label="My Plan" onPress={() => navigation.navigate('MyPlan')} />
+            <ActionIcon icon="person" label="My Profile" onPress={() => navigation.navigate('Profile',{
+              goBack:true
+            })} />
+            <ActionIcon icon="notifications" label="Notifications" onPress={() => {}} />
         </View>
 
         {/* Promo Banner */}
@@ -169,7 +171,7 @@ export default function DashboardScreen() {
         <View style={styles.transactionsContainer}>
             <View style={styles.transactionsHeader}>
                 <Text style={styles.transactionsTitle}>Latest Transactions</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {navigation.navigate('MyTransactions')}}>
                     <Text style={styles.seeAllText}>See All</Text>
                 </TouchableOpacity>
             </View>

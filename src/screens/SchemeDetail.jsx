@@ -8,7 +8,6 @@ import {
   ScrollView,
   Dimensions,
 } from 'react-native';
-import {FontAwesome } from '@react-native-vector-icons/fontawesome';
 import {FONTS,FONT_SIZES,SCREEN_HEIGHT,SCREEN_WIDTH,widthPercentageToDP, heightPercentageToDP, COLORS} from '@src/config/index'
 import RenderIcon from '@src/components/icon';
 
@@ -38,7 +37,7 @@ const GoldInvestmentTracker = ({navigation}) => {
       {/* Header */}
      <View style={styles.loginHeader}>
         <RenderIcon
-          name="arrow-left"
+          name="arrow-back"
           color={COLORS.secondary}
           size={22}
           onPress={() => navigation.goBack()}
@@ -57,7 +56,7 @@ const GoldInvestmentTracker = ({navigation}) => {
         </View>
         <TouchableOpacity style={styles.refreshButton}>
           <Text style={styles.refreshText}>Refresh Data</Text>
-          <FontAwesome name="refresh" size={20} color={COLORS.text} />
+          <RenderIcon name="refresh-circle-outline" size={20} color={COLORS.text} />
         </TouchableOpacity>
       </View>
 

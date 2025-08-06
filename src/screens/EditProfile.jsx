@@ -12,7 +12,6 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import {FontAwesome } from '@react-native-vector-icons/fontawesome';
 import {FONTS,FONT_SIZES,SCREEN_HEIGHT,SCREEN_WIDTH,widthPercentageToDP, heightPercentageToDP, COLORS, normalize} from '@src/config/index'
 import RenderIcon from '@src/components/icon';
 
@@ -64,7 +63,7 @@ const EditProfile = ({navigation}) => {
           ]}>
             {formData[field] || placeholder}
           </Text>
-          <FontAwesome 
+          <RenderIcon 
             name="calendar" 
             size={normalize(20)} 
             color={COLORS.primary} 
@@ -97,7 +96,7 @@ const EditProfile = ({navigation}) => {
       {/* Header */}
       <View style={styles.loginHeader}>
         <RenderIcon
-          name="arrow-left"
+          name="arrow-back"
           color={COLORS.secondary}
           size={22}
           onPress={() => navigation.goBack()}

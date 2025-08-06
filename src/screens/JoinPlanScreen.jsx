@@ -10,7 +10,6 @@ import {
   StatusBar,
   ImageBackground,
 } from 'react-native';
-import {FontAwesome } from '@react-native-vector-icons/fontawesome';
 import {FONTS,FONT_SIZES,SCREEN_HEIGHT,SCREEN_WIDTH,widthPercentageToDP, heightPercentageToDP, COLORS, normalize} from '@src/config/index'
 import RenderIcon from '@src/components/icon';
 
@@ -205,7 +204,7 @@ const JoinScheme = ({navigation}) => {
       {/* Header */}
       <View style={styles.loginHeader}>
         <RenderIcon
-          name="arrow-left"
+          name="arrow-back"
           color={COLORS.secondary}
           size={22}
           onPress={() => navigation.goBack()}

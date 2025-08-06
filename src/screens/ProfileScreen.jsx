@@ -13,6 +13,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import {FONTS,FONT_SIZES,SCREEN_HEIGHT,SCREEN_WIDTH,widthPercentageToDP, heightPercentageToDP, COLORS} from '@src/config/index'
 import CustomModal from '@src/components/modal';
+import RenderIcon from '@src/components/icon';
 
 
 // --- Mock Data ---
@@ -62,7 +63,22 @@ export default function ProfileScreen({route}) {
 
       {/* Custom Header */}
       <View style={styles.header}>
+        {route?.params?.goBack ? (
+          <RenderIcon
+            name="arrow-back"
+            color={COLORS.secondary}
+            size={22}
+            onPress={() => navigation.goBack()}
+            style={{
+              paddingLeft: 32,
+            }}
+          />
+        ):(
+          <Text></Text>
+        )}
+
         <Text style={styles.headerTitle}>Profile</Text>
+        <Text></Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -108,10 +124,14 @@ export default function ProfileScreen({route}) {
             <TouchableOpacity onPress={() => setModalVisible(true)}>
               <Text style={styles.actionTextDanger}>Logout?</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('ChangeMpin',{
-              screen: route.name,
-              title:"Change MPIN"
-            })}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('ChangeMpin', {
+                  screen: route.name,
+                  title: 'Change MPIN',
+                })
+              }
+            >
               <Text style={styles.actionTextTheme}>Change MPIN?</Text>
             </TouchableOpacity>
           </View>
@@ -143,7 +163,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: widthPercentageToDP('4%'),
     paddingVertical: heightPercentageToDP('2.5%'),
     backgroundColor: COLORS.theme,

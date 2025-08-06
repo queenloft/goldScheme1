@@ -11,6 +11,7 @@ import MyPlanScreen from '@src/screens/MyPlanScreen';
 import GoldInvestmentTracker from '@src/screens/SchemeDetail';
 import EditProfile from '@src/screens/EditProfile';
 import JoinScheme from '@src/screens/JoinPlanScreen';
+import TransactionsScreen from '@src/screens/MyTransactions';
 
 const Stack = createNativeStackNavigator();
 
@@ -38,6 +39,7 @@ function App() {
                 <Stack.Screen name="OTPScreen" component={OTPScreen}  />
 <Stack.Screen name="SchemeDetail" component={GoldInvestmentTracker}  />
 <Stack.Screen name="EditProfile" component={EditProfile}  />
+<Stack.Screen name="MyTransactions" component={TransactionsScreen}  />
 
       </Stack.Navigator>
     </NavigationContainer>

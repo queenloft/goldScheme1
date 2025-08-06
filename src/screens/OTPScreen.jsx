@@ -77,7 +77,7 @@ const OTPScreen = () => {
       <StatusBar barStyle="light-content" backgroundColor={COLORS.theme} />
       <View style={styles.loginHeader}>
         <RenderIcon
-          name="arrow-left"
+          name="arrow-back"
           color={COLORS.secondary}
           size={22}
           onPress={() => navigation.goBack()}

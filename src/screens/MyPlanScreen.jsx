@@ -10,7 +10,6 @@ import {
   StatusBar,
   FlatList
 } from 'react-native';
-import {FontAwesome } from '@react-native-vector-icons/fontawesome';
 import {FONTS,FONT_SIZES,SCREEN_HEIGHT,SCREEN_WIDTH,widthPercentageToDP, heightPercentageToDP, COLORS, normalize} from '@src/config/index'
 import RenderIcon from '@src/components/icon';
 
@@ -165,7 +164,7 @@ const GoldDashboard = ({navigation}) => {
       
       <View style={styles.loginHeader}>
         <RenderIcon
-          name="arrow-left"
+          name="arrow-back"
           color={COLORS.secondary}
           size={22}
           onPress={() => navigation.goBack()}
@@ -211,7 +210,7 @@ const GoldDashboard = ({navigation}) => {
             <TouchableOpacity style={styles.refreshButton}>
               <Text style={styles.refreshText}>Refresh Data</Text>
               <View style={styles.refreshIcon}>
-                <FontAwesome name="refresh" size={normalize(18)} color={COLORS.text} />
+                <RenderIcon name="refresh-circle-outline" size={normalize(18)} color={COLORS.text} />
               </View>
             </TouchableOpacity>
           </View>

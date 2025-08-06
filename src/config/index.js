@@ -23,6 +23,10 @@ export const FONTS = {
     PoppinsBlackItalic: 'Poppins-BlackItalic',
 }
 
+export const CONSTANTS = {
+  appName:"GRT gold"
+}
+
 export const COLORS = {
   primary: '#f0f4f7',
   primaryDark: '#1a1a1a',
@@ -34,13 +38,15 @@ export const COLORS = {
   textSecondary: '#6c757d',
   success: '#28a745',
   danger: '#dc3545',
-    cardBackground: 'rgba(255, 215, 0, 0.9)',
+  cardBackground: 'rgba(255, 215, 0, 0.9)',
   progressBar: '#FF8C00',
   progressBackground: '#0f4c3a',
-    orange: '#FF8C00',
-      digiGoldBg: '#f7bd4bff',
+  orange: '#FF8C00',
+  digiGoldBg: '#f7bd4bff',
   swarnaGradient: 'linear-gradient(135deg, #d2b617ff 0%, #FF8C00 100%)',
   labamGradient: 'linear-gradient(135deg, #FFA726 0%, #FF7043 100%)',
+  headerGreen: '#0f4c3a',
+  gold: '#B49F6A',
 };
 
 // --- Responsive Design Helpers ---
