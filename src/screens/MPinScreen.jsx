@@ -20,8 +20,9 @@ import {
 } from '@src/config/index';
 import RenderIcon from '@src/components/icon';
 
-const ChangeMpinScreen = () => {
+const ChangeMpinScreen = ({route}) => {
   const navigation = useNavigation();
+  const {title= 'Forgot MPIN?'} = route.params;
   const [mpin, setMpin] = useState(null);
   const [confirmMpin, setConfirmMpin] = useState(['', '', '', '']);
   // --- Custom MPIN Input Component ---
@@ -85,7 +86,7 @@ const ChangeMpinScreen = () => {
             paddingLeft: 32,
           }}
         />
-        <Text style={styles.loginHeaderText}>Forgot MPIN?</Text>
+        <Text style={styles.loginHeaderText}>{title}</Text>
       </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.mpinCard}>

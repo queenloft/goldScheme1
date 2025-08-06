@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {FONTS,FONT_SIZES,SCREEN_HEIGHT,SCREEN_WIDTH,widthPercentageToDP, heightPercentageToDP, COLORS} from '@src/config/index'
+import CustomModal from '@src/components/modal';
 
 
 // --- Mock Data ---
@@ -37,13 +38,28 @@ const ProfileField = ({ label, value }) => (
 
 // --- Profile Screen Component ---
 // This would be in its own file, e.g., `screens/ProfileScreen.js`
-export default function ProfileScreen() {
+export default function ProfileScreen({route}) {
   const navigation = useNavigation();
+    const [modalVisible, setModalVisible] = useState(false);
+  
+    // Function to handle the "YES" press
+    const handleDeleteConfirm = () => {
+      console.log("Account deletion confirmed.");
+      setModalVisible(false);
+      // Add your account deletion logic here
+    };
+  
+    // Function to handle the "NO" press or closing the modal
+    const handleDeleteCancel = () => {
+      console.log("Account deletion cancelled.");
+      setModalVisible(false);
+    };
+
 
   return (
     <SafeAreaView style={styles.root}>
       <StatusBar barStyle="light-content" backgroundColor={COLORS.theme} />
-      
+
       {/* Custom Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Profile</Text>
@@ -52,49 +68,63 @@ export default function ProfileScreen() {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {/* Profile Title Bar */}
         <View style={styles.profileTitleBar}>
-            <Text style={styles.profileTitle}></Text>
+          <Text style={styles.profileTitle}></Text>
         </View>
 
         {/* Main Content Area */}
         <View style={styles.contentArea}>
-            {/* Profile Picture */}
-            <View style={styles.avatarContainer}>
-                <Image 
-                    source={{ uri: MOCK_USER_PROFILE.avatar }}
-                    style={styles.avatar}
-                />
-                <TouchableOpacity style={styles.cameraIconContainer}>
-                    {/* Use a proper camera icon here */}
-                    <Text style={styles.cameraIcon}>📷</Text>
-                </TouchableOpacity>
-            </View>
-
-            {/* User Details */}
-            <ProfileField label="Name" value={MOCK_USER_PROFILE.name} />
-            <ProfileField label="Mobile No." value={MOCK_USER_PROFILE.mobile} />
-            <ProfileField label="Email Id" value={MOCK_USER_PROFILE.email} />
-            <ProfileField label="Date of Birth" value={MOCK_USER_PROFILE.dob} />
-            <ProfileField label="Date of Anniversary" value={MOCK_USER_PROFILE.anniversary} />
-
-            {/* Edit Button */}
-            <TouchableOpacity style={styles.editButton} 
-            onPress={() => navigation.navigate('EditProfile')}>
-                <Text style={styles.editButtonText}>EDIT PROFILE</Text>
+          {/* Profile Picture */}
+          <View style={styles.avatarContainer}>
+            <Image
+              source={{ uri: MOCK_USER_PROFILE.avatar }}
+              style={styles.avatar}
+            />
+            <TouchableOpacity style={styles.cameraIconContainer}>
+              {/* Use a proper camera icon here */}
+              <Text style={styles.cameraIcon}>📷</Text>
             </TouchableOpacity>
+          </View>
 
-            {/* Action Links */}
-            <View style={styles.actionsContainer}>
-                <TouchableOpacity>
-                    <Text style={styles.actionTextDanger}>Delete Account?</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={styles.actionTextTheme}>Change MPIN?</Text>
-                </TouchableOpacity>
-            </View>
+          {/* User Details */}
+          <ProfileField label="Name" value={MOCK_USER_PROFILE.name} />
+          <ProfileField label="Mobile No." value={MOCK_USER_PROFILE.mobile} />
+          <ProfileField label="Email Id" value={MOCK_USER_PROFILE.email} />
+          <ProfileField label="Date of Birth" value={MOCK_USER_PROFILE.dob} />
+          <ProfileField
+            label="Date of Anniversary"
+            value={MOCK_USER_PROFILE.anniversary}
+          />
 
-            
+          {/* Edit Button */}
+          <TouchableOpacity
+            style={styles.editButton}
+            onPress={() => navigation.navigate('EditProfile')}
+          >
+            <Text style={styles.editButtonText}>EDIT PROFILE</Text>
+          </TouchableOpacity>
+
+          {/* Action Links */}
+          <View style={styles.actionsContainer}>
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
+              <Text style={styles.actionTextDanger}>Logout?</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('ChangeMpin',{
+              screen: route.name,
+              title:"Change MPIN"
+            })}>
+              <Text style={styles.actionTextTheme}>Change MPIN?</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <Text style={styles.headerVersion}>AV: 1.7.0</Text>
+
+        {/* The Modal Component */}
+        <CustomModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          onConfirm={handleDeleteConfirm}
+          onCancel={handleDeleteCancel}
+        />
       </ScrollView>
     </SafeAreaView>
   );
