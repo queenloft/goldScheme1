@@ -24,7 +24,7 @@ export const FONTS = {
 }
 
 export const CONSTANTS = {
-  appName:"GRT gold"
+  appName:"GRT gold jewellers"
 }
 
 export const COLORS = {

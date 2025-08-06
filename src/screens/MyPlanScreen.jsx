@@ -145,6 +145,7 @@ const GoldDashboard = ({navigation}) => {
               opacity: item.progress >= 100 ? 0.5 : 1 
             }]}
             disabled={item.progress >= 100}
+            onPress={()=> navigation.navigate("Payment")}
           >
             <Text style={styles.payButtonText}>
               {item.progress >= 100 ? 'COMPLETED' : 'PAY'}
@@ -166,7 +167,7 @@ const GoldDashboard = ({navigation}) => {
         <RenderIcon
           name="arrow-back"
           color={COLORS.secondary}
-          size={22}
+          size={24}
           onPress={() => navigation.goBack()}
           style={{
             paddingLeft: 32,

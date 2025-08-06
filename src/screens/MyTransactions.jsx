@@ -48,7 +48,7 @@ const TransactionsScreen = ({navigation}) => {
                     {/* Replace with a proper icon */}
                    <RenderIcon
                         name="arrow-back"
-                        size={22}
+                        size={24}
                         color={COLORS.secondary}
                         onPress={() => navigation.goBack()}
                     />
@@ -97,13 +97,13 @@ const TransactionsScreen = ({navigation}) => {
                                         <RenderIcon
                                         name="checkmark-circle-outline"
                                         color={COLORS.success}
-                                        size={22}
+                                        size={24}
                                         />
                                     ) : (
                                         <RenderIcon
                                         name="close-circle-outline"
                                         color={COLORS.danger}
-                                        size={22}
+                                        size={24}
                                         />
                                     )
 
@@ -114,7 +114,7 @@ const TransactionsScreen = ({navigation}) => {
                                 <RenderIcon
                                  name={"cloud-download-outline"}
                                  color={COLORS.primaryDark}
-                                 size={22}
+                                 size={24}
                                 />
                             </Pressable>
                         </View>
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     },
     titleText: {
         color: COLORS.primaryDark,
-        fontSize: FONT_SIZES.title,
+        fontSize: FONT_SIZES.body,
         fontFamily: FONTS.PoppinsBold,
     },
     contentArea: {

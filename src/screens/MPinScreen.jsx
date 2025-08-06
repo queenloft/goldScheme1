@@ -80,7 +80,7 @@ const ChangeMpinScreen = ({route}) => {
         <RenderIcon
           name="arrow-back"
           color={COLORS.secondary}
-          size={22}
+          size={24}
           onPress={() => navigation.goBack()}
           style={{
             paddingLeft: 32,

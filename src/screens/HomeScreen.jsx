@@ -53,7 +53,7 @@ const MOCK_BANNERS = [
 const ActionIcon = ({ icon, label, onPress }) => (
     <TouchableOpacity style={styles.actionIconContainer} onPress={onPress}>
         <View style={styles.actionIconCircle}>
-            <RenderIcon name={icon} size={22} onPress={onPress}/>
+            <RenderIcon name={icon} size={24} onPress={onPress}/>
         </View>
         <Text style={styles.actionIconLabel}>{label}</Text>
     </TouchableOpacity>
