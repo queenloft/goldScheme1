@@ -24,7 +24,11 @@ export const FONTS = {
 
     NotoSansTamilRegular: 'NotoSansTamil-Regular',
     NotoSansTamilMedium: 'NotoSansTamil-Medium',
+    NotoSansTamilSemiBold: 'NotoSansTamil-SemiBold',
     NotoSansTamilBold: 'NotoSansTamil-Bold',
+    NotoSansTamilBlack: 'NotoSansTamil-Black',
+    NotoSansTamilLight: 'NotoSansTamil-Light',
+  
 }
 
 export const CONSTANTS = {

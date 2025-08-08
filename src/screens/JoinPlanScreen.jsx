@@ -263,29 +263,6 @@ const getStyles = isTamil => {
 
   return StyleSheet.create({
     container: { flex: 1, backgroundColor: COLORS.theme },
-    header: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      paddingHorizontal: widthPercentageToDP('4%'),
-      height: heightPercentageToDP('10%'),
-      backgroundColor: COLORS.theme,
-      borderBottomLeftRadius: 30,
-      borderBottomRightRadius: 30,
-    },
-    headerText: {
-      color: COLORS.white,
-      fontSize: FONT_SIZES.subtitle,
-      ...fontBold,
-    },
-    langButton: {
-      borderWidth: 1,
-      borderColor: COLORS.white,
-      borderRadius: 5,
-      paddingHorizontal: 8,
-      paddingVertical: 4,
-    },
-    langButtonText: { color: COLORS.white, ...fontMedium },
     goldenCard: {
       flex: 1,
       backgroundColor: COLORS.primary,
@@ -335,7 +312,7 @@ const getStyles = isTamil => {
       ...fontBold,
       marginBottom: heightPercentageToDP('0.5%'),
     },
-    goldText: { color: COLORS.accent },
+    goldText: { color: COLORS.gold },
     digiGoldSubtitle: {
       fontSize: FONT_SIZES.subtitle,
       ...fontMedium,
