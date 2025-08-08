@@ -11,5 +11,16 @@
   "signUp": "Sign Up",
   "invalidInputTitle": "Invalid Input",
   "invalidInputMessage": "Please enter a valid 10-digit mobile number.",
-  "otpFailedTitle": "OTP Failed"
+  "otpFailedTitle": "OTP Failed",
+  "goodAfternoon": "Good Afternoon",
+  "gold": "Gold",
+  "silver": "Silver",
+  "joinPlan": "Join Plan",
+  "myPlan": "My Plan",
+  "myProfile": "My Profile",
+  "notifications": "Notifications",
+  "latestTransactions": "Latest Transactions",
+  "seeAll": "See All",
+  "monthlyScheme": "MONTHLY SCHEME"
+  
 }

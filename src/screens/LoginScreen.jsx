@@ -23,6 +23,13 @@ import useLanguageStore from '@src/hooks/useLanguageStore';
 // import firestore from '@react-native-firebase/firestore';
 // --- END MOCK ---
 
+const MOCK_USER = {
+  name: 'Sanjay Kumar',
+  totalInvestment: 150000.0,
+  totalGoldGrams: 20.68,
+};
+
+
 
 // A simple custom modal to replace Alert.alert
 const CustomAlert = ({ visible, title, message, onClose }) => (

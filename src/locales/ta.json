@@ -11,5 +11,15 @@
   "signUp": "பதிவு செய்க",
   "invalidInputTitle": "தவறான உள்ளீடு",
   "invalidInputMessage": "சரியான 10 இலக்க மொபைல் எண்ணை உள்ளிடவும்.",
-  "otpFailedTitle": "OTP தோல்வி"
+  "otpFailedTitle": "OTP தோல்வி",
+  "goodAfternoon": "மதிய வணக்கம்",
+  "gold": "தங்கம்",
+  "silver": "வெள்ளி",
+  "joinPlan": "திட்டத்தில் சேர்",
+  "myPlan": "என் திட்டம்",
+  "myProfile": "என் சுயவிவரம்",
+  "notifications": "அறிவிப்புகள்",
+  "latestTransactions": "பரிவர்த்தனைகள்",
+  "seeAll": "மேலும்",
+  "monthlyScheme": "மாதாந்திர திட்டம்"
 }
