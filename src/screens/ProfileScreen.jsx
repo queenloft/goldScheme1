@@ -24,6 +24,7 @@ import CustomModal from '@src/components/modal';
 import RenderIcon from '@src/components/icon';
 import useAuthStore from '@src/hooks/useAuthStore';
 import { useTranslation } from 'react-i18next';
+import Header from '@src/components/header';
 
 // --- Mock Data ---
 // In a real app, this data would come from your user state or API
@@ -43,7 +44,7 @@ export default function ProfileScreen({ route }) {
   const { t, i18n } = useTranslation();
   const isTamil = i18n.language === 'ta';
   const styles = getStyles(isTamil);
-
+console.log(route)
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleLogoutConfirm = () => {
@@ -68,25 +69,10 @@ export default function ProfileScreen({ route }) {
     <SafeAreaView style={styles.root}>
       <StatusBar barStyle="light-content" backgroundColor={COLORS.theme} />
 
-      <View style={styles.header}>
-        {route?.params?.goBack ? (
-          <RenderIcon
-            name="arrow-back"
-            color={COLORS.white}
-            size={30}
-            onPress={() => navigation.goBack()}
-          />
-        ) : (
-          <View style={{ width: 24 }} />
-        )}
-        <Text style={styles.headerTitle}>{t('profile')}</Text>
-        <TouchableOpacity
-          onPress={() => i18n.changeLanguage(isTamil ? 'en' : 'ta')}
-          style={styles.langButton}
-        >
-          <Text style={styles.langButtonText}>{isTamil ? 'EN' : 'TA'}</Text>
-        </TouchableOpacity>
-      </View>
+      <Header 
+      isBack ={route?.params?.isBack}
+      title={t("profile")}
+      />
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.profileTitleBar}>
@@ -99,7 +85,7 @@ export default function ProfileScreen({ route }) {
               style={styles.avatar}
             />
             <TouchableOpacity style={styles.cameraIconContainer}>
-              <RenderIcon name="camera" size={18} color={COLORS.white} />
+              <RenderIcon name="camera" size={18} color={COLORS.primaryDark} />
             </TouchableOpacity>
           </View>
 
@@ -130,7 +116,7 @@ export default function ProfileScreen({ route }) {
             </TouchableOpacity>
             
           </View>
-            <Text style={styles.actionTextTheme}>Version: 1.0.0</Text>
+            <Text style={styles.version}>Version: 1.0.0</Text>
         </View>
 
         <CustomModal
@@ -216,7 +202,7 @@ const getStyles = isTamil => {
       position: 'absolute',
       bottom: 5,
       right: widthPercentageToDP('32%'),
-      backgroundColor: COLORS.theme,
+      backgroundColor: COLORS.primary,
       padding: 8,
       borderRadius: 20,
       borderWidth: 2,
@@ -272,6 +258,12 @@ const getStyles = isTamil => {
       color: COLORS.theme,
       fontSize: FONT_SIZES.caption,
       ...fontMedium,
+      paddingTop:8
+    },
+      version: {
+      color: COLORS.theme,
+      fontSize: FONT_SIZES.small,
+      ...fontRegular,
       paddingTop:8
     },
   });

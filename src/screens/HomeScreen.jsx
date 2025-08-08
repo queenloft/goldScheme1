@@ -160,7 +160,7 @@ export default function DashboardScreen() {
           <ActionIcon
             icon="person"
             labelKey="myProfile"
-            onPress={() => navigation.navigate('Profile')}
+            onPress={() => navigation.navigate('Profile',{isBack:true})}
           />
           <ActionIcon
             icon="notifications"
