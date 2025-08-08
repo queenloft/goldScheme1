@@ -113,7 +113,15 @@ export default function DashboardScreen() {
             <Text style={styles.userName}>{MOCK_USER.name}</Text>
             <Text style={styles.greetingText}>{t('goodAfternoon')}</Text>
           </View>
-          <Image source={{ uri: MOCK_USER.avatar }} style={styles.avatar} />
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Profile', {
+                isBack: true,
+              })
+            }
+          >
+            <Image source={{ uri: MOCK_USER.avatar }} style={styles.avatar} />
+          </TouchableOpacity>
         </View>
 
         <View style={styles.balanceCard}>
@@ -160,7 +168,7 @@ export default function DashboardScreen() {
           <ActionIcon
             icon="person"
             labelKey="myProfile"
-            onPress={() => navigation.navigate('Profile',{isBack:true})}
+            onPress={() => navigation.navigate('Profile', { isBack: true })}
           />
           <ActionIcon
             icon="notifications"

@@ -50,7 +50,23 @@
   "completed": "COMPLETED",
   "details": "DETAILS",
   "active": "Active",
-  "nearing": "Nearing"
+  "nearing": "Nearing",
+  "joinPlanTitle": "Join Plan",
+  "digiGold": "Digi Gold",
+  "dailySavingScheme": "Daily Saving Scheme",
+  "startingFrom100": "Starting From Rs.100/-",
+  "schemePeriod330": "Scheme Period 330 Days",
+  "joinNow": "JOIN NOW",
+  "swarnaMithra": "SWARNA MITHRA",
+  "startSavingToday": "Start Saving Today !",
+  "flexiblePlanDesc1": "Choose from flexible plan: Rs.1000/month,",
+  "flexiblePlanDesc2": "Rs.500/week, or Rs 100/day",
+  "swarnaLabam": "SWARNA LABAM",
+  "advanceDeposit11": "11 Month Advance Deposit",
+  "planA": "Plan A",
+  "mini25k": "Mini Rs.25,000/-",
+  "planB": "Plan B",
+  "mini4g": "Mini Weight 4gram"
   
   
 }
