@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -19,13 +19,22 @@ import TransactionsScreen from '@src/screens/MyTransactions';
 import PaymentScreen from '@src/screens/Payment';
 import NotificationScreen from '@src/screens/Notifications';
 import useAuthStore from '@src/hooks/useAuthStore';
+import firebase from '@react-native-firebase/app';
+import '@src/utility/i18n'; // This import initializes i18next
+import { useTranslation } from 'react-i18next';
+import useLanguageStore from '@src/hooks/useLanguageStore';
+
 
 const Stack = createNativeStackNavigator();
 
 function App() {
   // Get the isLoggedIn state from your Zustand store
   const { isLoggedIn } = useAuthStore();
+    const { t, i18n } = useTranslation(); // In your app, use the real useTranslation()
 
+ useEffect(()=>{
+  i18n.changeLanguage(useLanguageStore.getState().language)
+ },[])
   return (
     <NavigationContainer>
       <Stack.Navigator 

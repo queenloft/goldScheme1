@@ -9,135 +9,124 @@ import {
   ScrollView,
   StatusBar,
   Image,
-  Alert,
+  Modal,
+  Dimensions
 } from 'react-native';
-import {FONTS,FONT_SIZES,SCREEN_HEIGHT,SCREEN_WIDTH,widthPercentageToDP, heightPercentageToDP, COLORS} from '@src/config/index'
+// --- MOCK: In your project, you would import these from your actual files ---
+import {FONTS, FONT_SIZES, SCREEN_HEIGHT, SCREEN_WIDTH, widthPercentageToDP, heightPercentageToDP, COLORS} from '@src/config/index'
 import useAuthStore from '@src/hooks/useAuthStore';
+import { useTranslation } from 'react-i18next';
+import useLanguageStore from '@src/hooks/useLanguageStore';
+
+// NOTE: Firebase imports are commented out as they can't run in this environment, but they are correct for your project.
+// import { signInWithPhoneNumber, getAuth } from '@react-native-firebase/auth';
+// import firestore from '@react-native-firebase/firestore';
+// --- END MOCK ---
 
 
-// --- Mock Data (Localized for India) ---
-const MOCK_GOLD_PRICE_INR_PER_GRAM = 7250.75;
-const MOCK_USER = {
-  name: 'Sanjay Kumar',
-  totalInvestment: 150000.0,
-  totalGoldGrams: 20.68,
-};
-
-const MOCK_SCHEMES = [
-  {
-    id: '1',
-    name: 'Digital Gold Plan',
-    description: 'Invest in 24K digital gold, starting from just ₹100.',
-    minInvestment: 100,
-    details: 'Our Digital Gold Plan allows you to buy, sell, and store 24K gold digitally. It is a secure and convenient way to invest in gold without the hassle of physical storage. Investments can be made 24/7 through the app.'
-  },
-  {
-    id: '2',
-    name: 'Monthly Gold Scheme (SIP)',
-    description: 'A systematic plan to accumulate gold by paying monthly.',
-    minInvestment: 1000,
-    details: 'The Monthly Gold Scheme is a Systematic Investment Plan (SIP) for gold. You commit to a fixed monthly amount, which is used to purchase gold at the current market rate. This helps in averaging out your purchase cost over time.'
-  },
-  {
-    id: '3',
-    name: 'Gold Wealth Builder',
-    description: 'Long-term investment plan for maximizing your gold assets.',
-    minInvestment: 5000,
-    details: 'Designed for serious investors, the Gold Wealth Builder plan focuses on long-term growth. It combines features of digital gold with added benefits like lower transaction fees and dedicated support for larger investments.'
-  },
-];
-
-// --- Reusable Components ---
-
-const AppHeader = ({ onLogout, title = "GoldInvest" }) => (
-  <View style={styles.headerContainer}>
-    <Text style={styles.headerTitle}>{title}</Text>
-    {onLogout && (
-       <TouchableOpacity onPress={onLogout}>
-        <Text style={{color: COLORS.danger, fontSize: FONT_SIZES.body, fontFamily: FONTS.PoppinsMedium}}>Logout</Text>
-      </TouchableOpacity>
-    )}
-  </View>
+// A simple custom modal to replace Alert.alert
+const CustomAlert = ({ visible, title, message, onClose }) => (
+  <Modal
+    transparent={true}
+    animationType="fade"
+    visible={visible}
+    onRequestClose={onClose}
+  >
+    <View style={alertStyles.centeredView}>
+      <View style={alertStyles.modalView}>
+        <Text style={alertStyles.modalTitle}>{title}</Text>
+        <Text style={alertStyles.modalText}>{message}</Text>
+        <TouchableOpacity
+          style={alertStyles.button}
+          onPress={onClose}
+        >
+          <Text style={alertStyles.buttonText}>OK</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  </Modal>
 );
 
-const GoldPriceTicker = ({ price }) => (
-  <View style={styles.tickerContainer}>
-    <Text style={styles.tickerText}>Live Gold Price (24K/g): </Text>
-    <Text style={[styles.tickerText, { color: COLORS.success, fontFamily: FONTS.PoppinsMedium }]}>
-      ₹{price.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-    </Text>
-  </View>
-);
-
-const DashboardCard = ({ title, children }) => (
-  <View style={styles.cardContainer}>
-    <Text style={styles.cardTitle}>{title}</Text>
-    {children}
-  </View>
-);
-
-const SchemeCard = ({ scheme, onPress }) => (
-    <TouchableOpacity style={styles.schemeCardContainer} onPress={onPress}>
-        <View style={styles.schemeIcon}>
-             <Text style={{fontSize: FONT_SIZES.subtitle}}>✨</Text>
-        </View>
-        <View style={styles.schemeTextContainer}>
-            <Text style={styles.schemeName}>{scheme.name}</Text>
-            <Text style={styles.schemeDescription}>{scheme.description}</Text>
-        </View>
-        <View style={styles.schemeArrow}>
-            <Text style={{color: COLORS.theme, fontSize: FONT_SIZES.subtitle}}>{'>'}</Text>
-        </View>
-    </TouchableOpacity>
-);
-
-
-// --- Screens ---
-// NOTE: In a real project, each screen would be in its own file (e.g., screens/LoginScreen.js)
 
 const LoginScreen = ({ navigation }) => {
   const [mobileNumber, setMobileNumber] = useState('');
-    const { login } = useAuthStore();
+  const { t, i18n } = useTranslation(); // In your app, use the real useTranslation()
+  const { login } = useAuthStore();
+  const { language, setLanguage } = useLanguageStore();
+
+  const [alertInfo, setAlertInfo] = useState({ visible: false, title: '', message: '' });
+
+  const showAlert = (title, message) => {
+    setAlertInfo({ visible: true, title, message });
+  };
 
   const handleLogin = () => {
     if (mobileNumber.length !== 10) {
-      Alert.alert("Invalid Input", "Please enter a valid 10-digit mobile number.");
+      showAlert(t('invalidInputTitle'), t('invalidInputMessage'));
       return;
     }
     console.log('Login attempt with:', mobileNumber);
-    login(MOCK_USER, "1234567809876543212345678");
-    navigation.replace('MainApp', { user: MOCK_USER });
+    login(MOCK_USER, "some_mock_token"); 
+    navigation.replace('MainApp');
   };
 
-    const handleOTPLogin = () => {
- if (mobileNumber.length !== 10) {
-      Alert.alert("Invalid Input", "Please enter a valid 10-digit mobile number.");
+  const handleOTPLogin = async () => {
+    if (mobileNumber.length !== 10) {
+      showAlert(t('invalidInputTitle'), t('invalidInputMessage'));
       return;
     }
-    console.log('Login attempt with:', mobileNumber);
-    navigation.navigate('OTPScreen', { user: MOCK_USER });
+    try {
+      console.log('Attempting to send OTP to +91' + mobileNumber);
+      // In your real app, the Firebase logic would be here
+      // const authInstance = getAuth();
+      // const otpSentResponse = await signInWithPhoneNumber(authInstance, '+91' + mobileNumber);
+      // if (otpSentResponse) {
+      //   navigation.navigate('OTPScreen', { otpSentResponse });
+      // } else {
+      //   showAlert(t('otpFailedTitle'), 'Failed to send OTP. Please try again.');
+      // }
+      console.log("Simulating OTP sent successfully.");
+      // Simulating navigation for demo
+      // navigation.navigate('OTPScreen', { otpSentResponse: { verificationId: 'mock_verification_id' } });
 
+    } catch (error) {
+      console.log('Error in handleOTPLogin:', error);
+      showAlert(t('otpFailedTitle'), error.message);
     }
+  };
+
+  const isTamil = language === 'ta';
+  const styles = getStyles(isTamil);
 
   return (
     <SafeAreaView style={styles.loginRoot}>
       <StatusBar barStyle="light-content" backgroundColor={COLORS.theme} />
+      
+      <CustomAlert 
+        visible={alertInfo.visible}
+        title={alertInfo.title}
+        message={alertInfo.message}
+        onClose={() => setAlertInfo({ visible: false, title: '', message: '' })}
+      />
+
       <View style={styles.loginHeader}>
-        <Image 
-            source={{ uri: 'https://subraa.com/there/wp-content/uploads/2020/01/logo.png' }} 
-            style={styles.logo}
-            resizeMode="contain"
+        <Image
+          source={{ uri: 'https://subraa.com/there/wp-content/uploads/2020/01/logo.png' }}
+          style={styles.logo}
+          resizeMode="contain"
+          onError={(e) => console.log(e.nativeEvent.error)}
         />
-        <Text style={styles.loginHeaderText}>Save Gold With Us</Text>
+        <Text style={styles.loginHeaderText}>{t('saveGoldWithUs')}</Text>
       </View>
+
       <ScrollView style={styles.loginScrollView} keyboardShouldPersistTaps="handled">
         <View style={styles.loginContainer}>
-          <Text style={styles.loginTitle}>Sign In</Text>
+          <Text style={styles.loginTitle}>{t('signIn')}</Text>
           <View style={styles.inputGroup}>
-            <Text style={styles.label}>Mobile Number</Text>
+            <Text style={styles.label}>{t('mobileNumber')}</Text>
             <TextInput
               style={styles.input}
-              placeholder="Enter your Mobile Number"
+              placeholder={t('enterMobileNumber')}
               placeholderTextColor={COLORS.textSecondary}
               keyboardType="phone-pad"
               maxLength={10}
@@ -146,330 +135,217 @@ const LoginScreen = ({ navigation }) => {
             />
           </View>
           <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-            <Text style={styles.loginButtonText}>LOGIN</Text>
+            <Text style={styles.loginButtonText}>{t('login')}</Text>
           </TouchableOpacity>
-          <Text style={styles.orText}>(OR)</Text>
+          <Text style={styles.orText}>{t('or')}</Text>
           <TouchableOpacity style={[styles.loginButton, styles.otpButton]} onPress={handleOTPLogin}>
-            <Text style={styles.otpButtonText}>LOGIN WITH OTP</Text>
+            <Text style={styles.otpButtonText}>{t('loginWithOtp')}</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('ChangeMpin')}>
-              <Text style={styles.forgotPasswordText}>Forgot MPIN?</Text>
+          <TouchableOpacity onPress={() => console.log('Navigate to ChangeMpin')}>
+            <Text style={styles.forgotPasswordText}>{t('forgotMpin')}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
+
       <View style={styles.signUpContainer}>
-        <Text style={styles.signUpText}>Don't have an account? </Text>
+        <Text style={styles.signUpText}>{t('dontHaveAccount')}</Text>
         <TouchableOpacity>
-            <Text style={[styles.signUpText, {color: COLORS.theme, fontFamily: FONTS.PoppinsMedium}]}>Sign Up</Text>
+          <Text style={[styles.signUpText, { color: COLORS.theme, fontFamily: isTamil ? FONTS.NotoSansTamilMedium : FONTS.PoppinsMedium }]}>{t('signUp')}</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
 
+// --- Styles ---
+const getStyles = (isTamil) => {
+    // Define base font styles dynamically
+    const fontRegular = { fontFamily: isTamil ? FONTS.NotoSansTamilRegular : FONTS.PoppinsRegular };
+    const fontMedium = { fontFamily: isTamil ? FONTS.NotoSansTamilMedium : FONTS.PoppinsMedium };
+    const fontBold = { fontFamily: isTamil ? FONTS.NotoSansTamilBold : FONTS.PoppinsBold };
+
+    return StyleSheet.create({
+        loginRoot: { flex: 1, backgroundColor: COLORS.secondary },
+        loginScrollView: { flex: 1 },
+        loginHeader: {
+            backgroundColor: COLORS.theme,
+            height: heightPercentageToDP('25%'),
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderBottomLeftRadius: widthPercentageToDP('15%'),
+            borderBottomRightRadius: widthPercentageToDP('15%'),
+            paddingTop: heightPercentageToDP('2%'),
+        },
+        logo: {
+            width: widthPercentageToDP('40%'),
+            height: widthPercentageToDP('20%'),
+            marginBottom: heightPercentageToDP('1%'),
+        },
+        loginHeaderText: {
+            color: COLORS.textLight,
+            fontSize: FONT_SIZES.subtitle,
+            ...fontBold,
+        },
+        langSwitcherContainer: {
+            flexDirection: 'row',
+            justifyContent: 'center',
+            paddingVertical: 10,
+            backgroundColor: COLORS.primary,
+        },
+        langButton: {
+            paddingHorizontal: 20,
+            paddingVertical: 8,
+            marginHorizontal: 5,
+            borderRadius: 20,
+            borderWidth: 1,
+            borderColor: COLORS.theme,
+        },
+        langButtonActive: {
+            backgroundColor: COLORS.theme,
+        },
+        langButtonText: {
+            fontSize: 14,
+            color: COLORS.theme,
+            ...fontMedium,
+        },
+        loginContainer: {
+            flex: 1,
+            justifyContent: 'flex-start',
+            paddingHorizontal: widthPercentageToDP('8%'),
+            paddingTop: heightPercentageToDP('3%'),
+        },
+        loginTitle: {
+            fontSize: FONT_SIZES.title,
+            color: COLORS.text,
+            textAlign: 'center',
+            marginBottom: heightPercentageToDP('3%'),
+            ...fontBold,
+        },
+        inputGroup: {
+            marginBottom: heightPercentageToDP('2%'),
+        },
+        label: {
+            color: COLORS.textSecondary,
+            fontSize: FONT_SIZES.caption,
+            marginBottom: 5,
+            ...fontRegular,
+        },
+        input: {
+            backgroundColor: COLORS.primary,
+            color: COLORS.text,
+            paddingHorizontal: widthPercentageToDP('4%'),
+            height: heightPercentageToDP('6.5%'),
+            borderRadius: 10,
+            fontSize: FONT_SIZES.body,
+            borderWidth: 1,
+            borderColor: '#ddd',
+            ...fontRegular,
+        },
+        loginButton: {
+            backgroundColor: COLORS.theme,
+            paddingVertical: heightPercentageToDP('1.8%'),
+            borderRadius: 10,
+            alignItems: 'center',
+            marginTop: heightPercentageToDP('1%'),
+            elevation: 2,
+        },
+        otpButton: {
+            backgroundColor: COLORS.secondary,
+            borderWidth: 1,
+            borderColor: COLORS.theme,
+        },
+        loginButtonText: {
+            color: COLORS.textLight,
+            fontSize: FONT_SIZES.body,
+            ...fontMedium,
+        },
+        otpButtonText: {
+            color: COLORS.theme,
+            fontSize: FONT_SIZES.body,
+            ...fontMedium,
+        },
+        orText: {
+            textAlign: 'center',
+            color: COLORS.textSecondary,
+            marginVertical: heightPercentageToDP('2%'),
+            fontSize: FONT_SIZES.body,
+            ...fontRegular,
+        },
+        forgotPasswordText: {
+            color: COLORS.theme,
+            textAlign: 'center',
+            marginTop: heightPercentageToDP('2%'),
+            fontSize: FONT_SIZES.caption,
+            ...fontMedium,
+        },
+        signUpContainer: {
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingVertical: heightPercentageToDP('2%'),
+            borderTopWidth: 1,
+            borderTopColor: '#eee',
+        },
+        signUpText: {
+            color: COLORS.textSecondary,
+            fontSize: FONT_SIZES.body,
+            ...fontRegular,
+        },
+    });
+};
+
+// Styles for the custom alert modal
+const alertStyles = StyleSheet.create({
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: COLORS.modalBackdrop,
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        width: '80%',
+    },
+    modalTitle: {
+        marginBottom: 15,
+        textAlign: "center",
+        fontSize: 20,
+        fontWeight: "bold",
+        color: COLORS.textPrimary,
+    },
+    modalText: {
+        marginBottom: 25,
+        textAlign: "center",
+        fontSize: 16,
+        color: COLORS.textSecondary,
+    },
+    button: {
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        elevation: 2,
+        backgroundColor: COLORS.theme,
+        minWidth: 100,
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: 16,
+    }
+});
 
 export default LoginScreen;
-
-
-
-
-// --- Styles ---
-
-const styles = StyleSheet.create({
-  // Root and Main Container
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.primary,
-  },
-  scrollContent: {
-    padding: widthPercentageToDP('5%'),
-    paddingBottom: heightPercentageToDP('5%'),
-  },
-  // Header
-  headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: widthPercentageToDP('5%'),
-    paddingVertical: heightPercentageToDP('2%'),
-    backgroundColor: COLORS.secondary,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-  headerTitle: {
-    color: COLORS.text,
-    fontSize: FONT_SIZES.subtitle,
-    fontFamily: FONTS.PoppinsBold,
-  },
-  // Welcome Text
-  welcomeText: {
-    color: COLORS.text,
-    fontSize: FONT_SIZES.title,
-    fontFamily: FONTS.PoppinsRegular,
-    marginBottom: heightPercentageToDP('1%'),
-  },
-  // Ticker
-  tickerContainer: {
-    backgroundColor: COLORS.secondary,
-    paddingVertical: heightPercentageToDP('1.5%'),
-    paddingHorizontal: widthPercentageToDP('4%'),
-    borderRadius: 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: heightPercentageToDP('2.5%'),
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-  },
-  tickerText: {
-    color: COLORS.text,
-    fontSize: FONT_SIZES.body,
-    fontFamily: FONTS.PoppinsRegular,
-  },
-  // Dashboard Card
-  cardContainer: {
-    backgroundColor: COLORS.secondary,
-    borderRadius: 15,
-    padding: widthPercentageToDP('5%'),
-    marginBottom: heightPercentageToDP('2.5%'),
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
-  },
-  cardTitle: {
-    color: COLORS.theme,
-    fontSize: FONT_SIZES.subtitle,
-    fontFamily: FONTS.PoppinsBold,
-    marginBottom: heightPercentageToDP('2%'),
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    paddingBottom: heightPercentageToDP('1%'),
-  },
-  // Portfolio Card
-  portfolioRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: heightPercentageToDP('1%'),
-  },
-  portfolioLabel: {
-    color: COLORS.textSecondary,
-    fontSize: FONT_SIZES.body,
-    fontFamily: FONTS.PoppinsRegular,
-  },
-  portfolioValue: {
-    color: COLORS.text,
-    fontSize: FONT_SIZES.body,
-    fontFamily: FONTS.PoppinsMedium,
-  },
-  // Scheme Card
-  schemeCardContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: heightPercentageToDP('1.5%'),
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
-  },
-  schemeIcon: {
-    width: widthPercentageToDP('10%'),
-    height: widthPercentageToDP('10%'),
-    borderRadius: widthPercentageToDP('5%'),
-    backgroundColor: 'rgba(0, 128, 128, 0.1)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: widthPercentageToDP('4%'),
-  },
-  schemeTextContainer: {
-    flex: 1,
-  },
-  schemeName: {
-    color: COLORS.text,
-    fontSize: FONT_SIZES.body,
-    fontFamily: FONTS.PoppinsMedium,
-  },
-  schemeDescription: {
-    color: COLORS.textSecondary,
-    fontSize: FONT_SIZES.caption,
-    fontFamily: FONTS.PoppinsRegular,
-    marginTop: 4,
-  },
-  schemeArrow: {
-    marginLeft: widthPercentageToDP('2%'),
-  },
-  // Login Screen
-  loginRoot: {
-    flex: 1,
-    backgroundColor: COLORS.secondary,
-  },
-  loginScrollView: {
-    flex: 1,
-  },
-  loginHeader: {
-    backgroundColor: COLORS.theme,
-    height: heightPercentageToDP('30%'),
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomLeftRadius: widthPercentageToDP('15%'),
-    borderBottomRightRadius: widthPercentageToDP('15%'),
-    paddingTop: heightPercentageToDP('5%'),
-  },
-  logo: {
-    width: widthPercentageToDP('40%'),
-    height: widthPercentageToDP('20%'),
-    marginBottom: heightPercentageToDP('1%'),
-  },
-  loginHeaderText: {
-    color: COLORS.textLight,
-    fontSize: FONT_SIZES.subtitle,
-    fontFamily: FONTS.PoppinsBold,
-  },
-  loginContainer: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    paddingHorizontal: widthPercentageToDP('8%'),
-    paddingTop: heightPercentageToDP('5%'),
-  },
-  loginTitle: {
-    fontSize: FONT_SIZES.title,
-    fontFamily: FONTS.PoppinsBold,
-    color: COLORS.text,
-    textAlign: 'center',
-    marginBottom: heightPercentageToDP('3%'),
-  },
-  inputGroup: {
-    marginBottom: heightPercentageToDP('2%'),
-  },
-  label: {
-    color: COLORS.textSecondary,
-    fontSize: FONT_SIZES.caption,
-    fontFamily: FONTS.PoppinsRegular,
-    marginBottom: 5,
-  },
-  input: {
-    backgroundColor: COLORS.primary,
-    color: COLORS.text,
-    paddingHorizontal: widthPercentageToDP('4%'),
-    height: heightPercentageToDP('6.5%'),
-    borderRadius: 10,
-    fontSize: FONT_SIZES.body,
-    fontFamily: FONTS.PoppinsRegular,
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-  loginButton: {
-    backgroundColor: COLORS.theme,
-    paddingVertical: heightPercentageToDP('1.8%'),
-    borderRadius: 10,
-    alignItems: 'center',
-    marginTop: heightPercentageToDP('1%'),
-  },
-  otpButton: {
-      backgroundColor: COLORS.secondary,
-      borderWidth: 1,
-      borderColor: COLORS.theme,
-  },
-  loginButtonText: {
-    color: COLORS.textLight,
-    fontSize: FONT_SIZES.body,
-    fontFamily: FONTS.PoppinsMedium,
-  },
-  otpButtonText: {
-    color: COLORS.theme,
-    fontSize: FONT_SIZES.body,
-    fontFamily: FONTS.PoppinsMedium,
-  },
-  orText: {
-    textAlign: 'center',
-    color: COLORS.textSecondary,
-    marginVertical: heightPercentageToDP('2%'),
-    fontSize: FONT_SIZES.body,
-    fontFamily: FONTS.PoppinsRegular,
-  },
-  forgotPasswordText: {
-    color: COLORS.theme,
-    textAlign: 'center',
-    marginTop: heightPercentageToDP('2%'),
-    fontFamily: FONTS.PoppinsMedium,
-    fontSize: FONT_SIZES.caption,
-  },
-  signUpContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingVertical: heightPercentageToDP('2%'),
-    borderTopWidth: 1,
-    borderTopColor: '#eee',
-  },
-  signUpText: {
-    color: COLORS.textSecondary,
-    fontSize: FONT_SIZES.body,
-    fontFamily: FONTS.PoppinsRegular,
-  },
-  // Scheme Details Screen
-  detailsCard: {
-    backgroundColor: COLORS.secondary,
-    borderRadius: 15,
-    padding: widthPercentageToDP('5%'),
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
-  },
-  detailsHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    paddingBottom: heightPercentageToDP('2%'),
-    marginBottom: heightPercentageToDP('2%'),
-  },
-  detailsIcon: {
-    fontSize: FONT_SIZES.title,
-    marginRight: widthPercentageToDP('4%'),
-  },
-  detailsTitle: {
-    fontSize: FONT_SIZES.subtitle,
-    fontFamily: FONTS.PoppinsBold,
-    color: COLORS.theme,
-    flex: 1,
-  },
-  detailsDescription: {
-    fontSize: FONT_SIZES.body,
-    color: COLORS.textSecondary,
-    fontFamily: FONTS.PoppinsRegular,
-    lineHeight: heightPercentageToDP('3%'),
-    marginBottom: heightPercentageToDP('3%'),
-  },
-  detailsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: heightPercentageToDP('1.5%'),
-    borderTopWidth: 1,
-    borderTopColor: '#eee',
-  },
-  detailsLabel: {
-    fontSize: FONT_SIZES.body,
-    color: COLORS.text,
-    fontFamily: FONTS.PoppinsMedium,
-  },
-  detailsValue: {
-    fontSize: FONT_SIZES.body,
-    color: COLORS.success,
-    fontFamily: FONTS.PoppinsMedium,
-  },
-  investButton: {
-    backgroundColor: COLORS.accent,
-    paddingVertical: heightPercentageToDP('1.8%'),
-    borderRadius: 10,
-    alignItems: 'center',
-    marginTop: heightPercentageToDP('3%'),
-  },
-  investButtonText: {
-    color: COLORS.primaryDark,
-    fontSize: FONT_SIZES.body,
-    fontFamily: FONTS.PoppinsBold,
-  }
-});

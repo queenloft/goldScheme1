@@ -1,0 +1,15 @@
+{
+  "saveGoldWithUs": "Save Gold With Us",
+  "signIn": "Sign In",
+  "mobileNumber": "Mobile Number",
+  "enterMobileNumber": "Enter your Mobile Number",
+  "login": "LOGIN",
+  "or": "(OR)",
+  "loginWithOtp": "LOGIN WITH OTP",
+  "forgotMpin": "Forgot MPIN?",
+  "dontHaveAccount": "Don't have an account? ",
+  "signUp": "Sign Up",
+  "invalidInputTitle": "Invalid Input",
+  "invalidInputMessage": "Please enter a valid 10-digit mobile number.",
+  "otpFailedTitle": "OTP Failed"
+}

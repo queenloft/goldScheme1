@@ -67,6 +67,42 @@
 		<string>Poppins-SemiBoldItalic.ttf</string>
 		<string>Poppins-Thin.ttf</string>
 		<string>Poppins-ThinItalic.ttf</string>
+		<string>NotoSansTamil-Black.ttf</string>
+		<string>NotoSansTamil-Bold.ttf</string>
+		<string>NotoSansTamil-ExtraBold.ttf</string>
+		<string>NotoSansTamil-ExtraLight.ttf</string>
+		<string>NotoSansTamil-Light.ttf</string>
+		<string>NotoSansTamil-Medium.ttf</string>
+		<string>NotoSansTamil-Regular.ttf</string>
+		<string>NotoSansTamil-SemiBold.ttf</string>
+		<string>NotoSansTamil-Thin.ttf</string>
+		<string>NotoSansTamil_Condensed-Black.ttf</string>
+		<string>NotoSansTamil_Condensed-Bold.ttf</string>
+		<string>NotoSansTamil_Condensed-ExtraBold.ttf</string>
+		<string>NotoSansTamil_Condensed-ExtraLight.ttf</string>
+		<string>NotoSansTamil_Condensed-Light.ttf</string>
+		<string>NotoSansTamil_Condensed-Medium.ttf</string>
+		<string>NotoSansTamil_Condensed-Regular.ttf</string>
+		<string>NotoSansTamil_Condensed-SemiBold.ttf</string>
+		<string>NotoSansTamil_Condensed-Thin.ttf</string>
+		<string>NotoSansTamil_ExtraCondensed-Black.ttf</string>
+		<string>NotoSansTamil_ExtraCondensed-Bold.ttf</string>
+		<string>NotoSansTamil_ExtraCondensed-ExtraBold.ttf</string>
+		<string>NotoSansTamil_ExtraCondensed-ExtraLight.ttf</string>
+		<string>NotoSansTamil_ExtraCondensed-Light.ttf</string>
+		<string>NotoSansTamil_ExtraCondensed-Medium.ttf</string>
+		<string>NotoSansTamil_ExtraCondensed-Regular.ttf</string>
+		<string>NotoSansTamil_ExtraCondensed-SemiBold.ttf</string>
+		<string>NotoSansTamil_ExtraCondensed-Thin.ttf</string>
+		<string>NotoSansTamil_SemiCondensed-Black.ttf</string>
+		<string>NotoSansTamil_SemiCondensed-Bold.ttf</string>
+		<string>NotoSansTamil_SemiCondensed-ExtraBold.ttf</string>
+		<string>NotoSansTamil_SemiCondensed-ExtraLight.ttf</string>
+		<string>NotoSansTamil_SemiCondensed-Light.ttf</string>
+		<string>NotoSansTamil_SemiCondensed-Medium.ttf</string>
+		<string>NotoSansTamil_SemiCondensed-Regular.ttf</string>
+		<string>NotoSansTamil_SemiCondensed-SemiBold.ttf</string>
+		<string>NotoSansTamil_SemiCondensed-Thin.ttf</string>
 	</array>
 </dict>
 </plist>

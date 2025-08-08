@@ -21,6 +21,10 @@ export const FONTS = {
     PoppinsSemiBoldItalic: 'Poppins-SemiBoldItalic',
     PoppinsExtraBoldItalic: 'Poppins-ExtraBoldItalic',
     PoppinsBlackItalic: 'Poppins-BlackItalic',
+
+    NotoSansTamilRegular: 'NotoSansTamil-Regular',
+    NotoSansTamilMedium: 'NotoSansTamil-Medium',
+    NotoSansTamilBold: 'NotoSansTamil-Bold',
 }
 
 export const CONSTANTS = {

@@ -1,0 +1,15 @@
+{
+  "saveGoldWithUs": "எங்களுடன் தங்கம் சேமியுங்கள்",
+  "signIn": "உள்நுழைக",
+  "mobileNumber": "மொபைல் எண்",
+  "enterMobileNumber": "உங்கள் மொபைல் எண்ணை உள்ளிடவும்",
+  "login": "உள்நுழைக",
+  "or": "(அல்லது)",
+  "loginWithOtp": "OTP மூலம் உள்நுழைக",
+  "forgotMpin": "MPIN மறந்துவிட்டதா?",
+  "dontHaveAccount": "கணக்கு இல்லையா? ",
+  "signUp": "பதிவு செய்க",
+  "invalidInputTitle": "தவறான உள்ளீடு",
+  "invalidInputMessage": "சரியான 10 இலக்க மொபைல் எண்ணை உள்ளிடவும்.",
+  "otpFailedTitle": "OTP தோல்வி"
+}

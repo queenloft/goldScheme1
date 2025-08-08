@@ -19,14 +19,21 @@ import {
   COLORS,
 } from '@src/config/index';
 import RenderIcon from '@src/components/icon';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import useAuthStore from '@src/hooks/useAuthStore';
 
-const OTPScreen = () => {
+const OTPScreen = ({
+  route: {
+    params: { user, otpSentResponse },
+  },
+}) => {
+  const { login } = useAuthStore();
   const navigation = useNavigation();
   const [mpin, setMpin] = useState(null);
-  const [confirmMpin, setConfirmMpin] = useState(['', '', '', '']);
   // --- Custom MPIN Input Component ---
   const MpinInput = ({ setMpin }) => {
-    const [pin, setPin] = useState(['', '', '', '']);
+    const [pin, setPin] = useState(['', '', '', '','', '']);
     const inputs = useRef([]);
 
     const handleChange = (text, index) => {
@@ -36,9 +43,9 @@ const OTPScreen = () => {
       updatedPin[index] = text;
       setPin(updatedPin);
 
-      if (text && index < 3) {
+      if (text && index < 5) {
         inputs.current[index + 1].focus();
-      } else if (index == 3 && text) {
+      } else if (index == 5 && text) {
         setMpin(pin);
       }
     };
@@ -53,7 +60,7 @@ const OTPScreen = () => {
 
     return (
       <View style={styles.mpinContainer}>
-        {[0, 1, 2, 3].map(i => (
+        {[0, 1, 2, 3,4,5].map(i => (
           <TextInput
             key={i}
             ref={ref => (inputs.current[i] = ref)}
@@ -71,6 +78,40 @@ const OTPScreen = () => {
       </View>
     );
   };
+
+  const confirmCode = async (code) => {
+    try {
+      const result = await otpSentResponse.confirm(code.join(''));
+      const user = result.user;
+
+      // Create minimal user model
+      const userDocRef = firestore().collection('users').doc(user.uid);
+      const doc = await userDocRef.get();
+
+      if (!doc.exists) {
+        await userDocRef.set({
+          name: '',
+          active: true,
+          mobile: phone,
+          email: '',
+          dob: '__-__-____',
+          anniversary: '__-__-____',
+          avatar: `https://picsum.photos/seed/${user.uid}/100/100`,
+          created_at: firestore.FieldValue.serverTimestamp(),
+          updated_at: firestore.FieldValue.serverTimestamp()
+        });
+      }
+
+      login(user, "1234567809876543212345678");
+      navigation.replace('MainApp', { user });
+
+
+    } catch (error) {
+      console.error('Invalid code.', error);
+      alert('Invalid OTP.');
+    }
+  };
+
 
   return (
     <SafeAreaView style={styles.root}>
@@ -98,7 +139,7 @@ const OTPScreen = () => {
 
           <Text style={styles.mpinLabel}>Enter OTP</Text>
 
-          <MpinInput pin={mpin} setMpin={setMpin} />
+          <MpinInput pin={mpin} setMpin={confirmCode} />
 
           <TouchableOpacity style={styles.changeButton}>
             <Text style={styles.changeButtonText}>Verify</Text>
@@ -115,7 +156,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.secondary,
     margin: widthPercentageToDP('4%'),
     borderRadius: 25,
-    padding: widthPercentageToDP('6%'),
+    paddingHorizontal: widthPercentageToDP('1%'),
+    paddingVertical: heightPercentageToDP('3%'),
     alignItems: 'center',
   },
   mpinIllustration: {
@@ -136,8 +178,8 @@ const styles = StyleSheet.create({
     marginBottom: heightPercentageToDP('3%'),
   },
   mpinBox: {
-    width: widthPercentageToDP('16%'),
-    height: widthPercentageToDP('16%'),
+    width: widthPercentageToDP('14%'),
+    height: widthPercentageToDP('14%'),
     borderWidth: 1,
     borderColor: COLORS.textSecondary,
     borderRadius: 15,

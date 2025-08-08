@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "819096658243",
+    "project_id": "goldscheme-b4f0e",
+    "storage_bucket": "goldscheme-b4f0e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819096658243:android:05148a62e51b03ecfa8ff6",
+        "android_client_info": {
+          "package_name": "com.vipinfotech.goldscheme"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWcHyIv3n5lAlimiEppM72keIL7nYN7Ts"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
