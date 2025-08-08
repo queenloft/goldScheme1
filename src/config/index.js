@@ -51,7 +51,8 @@ export const COLORS = {
   labamGradient: 'linear-gradient(135deg, #FFA726 0%, #FF7043 100%)',
   headerGreen: '#0f4c3a',
   gold: '#B49F6A',
-  white:"#fff"
+  white:"#fff",
+   lightGray: '#F0F0F0',
 };
 
 // --- Responsive Design Helpers ---

@@ -30,7 +30,27 @@
   "anniversary": "Date of Anniversary",
   "editProfile": "EDIT PROFILE",
   "logout": "Logout?",
-  "changeMpin": "Change MPIN?"
+  "changeMpin": "Change MPIN?",
+   "logoutConfirmTitle": "Confirm Logout",
+  "logoutConfirmMessage": "Are you sure you want to logout?",
+  "yes": "YES",
+  "no": "NO",
+  "schemes": "Schemes",
+  "balanceDue": "Balance Due",
+  "lastSync": "Last Sync",
+  "refreshData": "Refresh Data",
+  "groupCode": "GroupCode-MsNo.",
+  "paidAmount": "Paid Amount",
+  "paidWeight": "Paid Weight",
+  "of": "of",
+  "progress": "Progress",
+  "maturity": "Maturity",
+  "joinDate": "Join Date",
+  "pay": "PAY",
+  "completed": "COMPLETED",
+  "details": "DETAILS",
+  "active": "Active",
+  "nearing": "Nearing"
   
   
 }
