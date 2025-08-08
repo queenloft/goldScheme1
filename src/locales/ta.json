@@ -21,5 +21,14 @@
   "notifications": "அறிவிப்புகள்",
   "latestTransactions": "பரிவர்த்தனைகள்",
   "seeAll": "மேலும்",
-  "monthlyScheme": "மாதாந்திர திட்டம்"
+  "monthlyScheme": "மாதாந்திர திட்டம்",
+   "profile": "சுயவிவரம்",
+  "name": "பெயர்",
+  "mobileNo": "மொபைல் எண்",
+  "emailId": "மின்னஞ்சல் முகவரி",
+  "dob": "பிறந்த தேதி",
+  "anniversary": "திருமண நாள்",
+  "editProfile": "சுயவிவரத்தைத் திருத்து",
+  "logout": "வெளியேறு?",
+  "changeMpin": "MPIN மாற்று?"
 }

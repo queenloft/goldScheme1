@@ -21,6 +21,16 @@
   "notifications": "Notifications",
   "latestTransactions": "Latest Transactions",
   "seeAll": "See All",
-  "monthlyScheme": "MONTHLY SCHEME"
+  "monthlyScheme": "MONTHLY SCHEME",
+  "profile": "Profile",
+  "name": "Name",
+  "mobileNo": "Mobile No.",
+  "emailId": "Email Id",
+  "dob": "Date of Birth",
+  "anniversary": "Date of Anniversary",
+  "editProfile": "EDIT PROFILE",
+  "logout": "Logout?",
+  "changeMpin": "Change MPIN?"
+  
   
 }
