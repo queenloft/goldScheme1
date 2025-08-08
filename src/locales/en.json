@@ -82,7 +82,17 @@
   "enterLastName": "Enter last name",
   "enterMobileNo": "Enter mobile number",
   "enterEmail": "Enter email address",
-  "updateProfile": "UPDATE PROFILE"
+  "updateProfile": "UPDATE PROFILE",
+  "myTransactions": "My Transactions",
+  "paymentStatus": "Payment Status",
+  "all": "All",
+  "date": "Date",
+  "amount": "Amount",
+  "status": "Status",
+  "pdf": "PDF",
+  "success": "SUCCESS",
+  "pending": "PENDING",
+  "failed": "FAILED"
   
   
 }
