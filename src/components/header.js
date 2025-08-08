@@ -29,7 +29,6 @@ export default function Header({title, isBack }) {
   const {setLanguage} = useLanguageStore();
   const isTamil = i18n.language === 'ta';
   const styles = getStyles(isTamil);
-  console.log(isBack)
   return (
     <View style={styles.header}>
       {isBack ? (

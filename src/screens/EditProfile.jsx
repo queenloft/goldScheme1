@@ -12,72 +12,94 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import {FONTS,FONT_SIZES,SCREEN_HEIGHT,SCREEN_WIDTH,widthPercentageToDP, heightPercentageToDP, COLORS, normalize} from '@src/config/index'
+import {
+  FONTS,
+  FONT_SIZES,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+  widthPercentageToDP,
+  heightPercentageToDP,
+  COLORS,
+  normalize,
+} from '@src/config/index';
+import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+import Header from '@src/components/header';
 import RenderIcon from '@src/components/icon';
+import useLanguageStore from '@src/hooks/useLanguageStore';
 
+const EditProfile = () => {
+  const navigation = useNavigation();
+  const {language} = useLanguageStore();
+  const { t, i18n } = useTranslation();
 
-const EditProfile = ({navigation}) => {
+  const isTamil = language === 'ta';
+  const styles = getStyles(isTamil);
+  console.log(language, isTamil)
   const [formData, setFormData] = useState({
     firstName: 'Sathish',
     lastName: 'Shalini',
     mobileNo: '9786252624',
     email: 'Sakthivel9393@gmail.com',
     dateOfBirth: '',
-    dateOfAnniversary: ''
+    dateOfAnniversary: '',
   });
 
   const [focusedInput, setFocusedInput] = useState(null);
 
   const handleInputChange = (field, value) => {
-    setFormData(prevState => ({
-      ...prevState,
-      [field]: value
-    }));
+    setFormData(prevState => ({ ...prevState, [field]: value }));
   };
 
-  const handleDatePress = (field) => {
-    // In a real app, you would open a date picker here
+  const handleDatePress = field => {
     console.log(`Open date picker for ${field}`);
   };
 
   const handleUpdateProfile = () => {
-    // Handle profile update logic here
     console.log('Update profile:', formData);
   };
 
-  const renderInput = (label, field, placeholder, keyboardType = 'default', isDate = false) => (
+  const renderInput = (
+    labelKey,
+    field,
+    placeholderKey,
+    keyboardType = 'default',
+    isDate = false,
+  ) => (
     <View style={styles.inputContainer}>
-      <Text style={styles.inputLabel}>{label}</Text>
+      <Text style={styles.inputLabel}>{t(labelKey)}</Text>
       {isDate ? (
-        <TouchableOpacity 
+        <TouchableOpacity
           style={[
             styles.dateInput,
-            focusedInput === field && styles.inputFocused
+            focusedInput === field && styles.inputFocused,
           ]}
           onPress={() => handleDatePress(field)}
           activeOpacity={0.7}
         >
-          <Text style={[
-            styles.dateInputText,
-            !formData[field] && styles.placeholderText
-          ]}>
-            {formData[field] || placeholder}
+          <Text
+            style={[
+              styles.dateInputText,
+              !formData[field] && styles.placeholderText,
+            ]}
+          >
+            {formData[field] || t(placeholderKey)}
           </Text>
-          <RenderIcon 
-            name="calendar" 
-            size={normalize(20)} 
-            color={COLORS.primary} 
+          <RenderIcon
+            name="calendar"
+            size={normalize(20)}
+            color={COLORS.theme}
           />
         </TouchableOpacity>
       ) : (
         <TextInput
           style={[
             styles.textInput,
-            focusedInput === field && styles.inputFocused
+            focusedInput === field && styles.inputFocused,
           ]}
           value={formData[field]}
-          onChangeText={(value) => handleInputChange(field, value)}
-          placeholder={placeholder}
+          onChangeText={value => handleInputChange(field, value)}
+          placeholder={t(placeholderKey)}
           placeholderTextColor={COLORS.textPlaceholder}
           keyboardType={keyboardType}
           onFocus={() => setFocusedInput(field)}
@@ -91,231 +113,152 @@ const EditProfile = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={COLORS.primary} barStyle="light-content" />
-      
-      {/* Header */}
-      <View style={styles.loginHeader}>
-        <RenderIcon
-          name="arrow-back"
-          color={COLORS.secondary}
-          size={24}
-          onPress={() => navigation.goBack()}
-          style={{
-            paddingLeft: 32,
-          }}
-        />
-        <Text style={styles.loginHeaderText}>Edit Profile</Text>
-      </View>
+      <StatusBar backgroundColor={COLORS.theme} barStyle="light-content" />
 
-      <KeyboardAvoidingView 
+           <Header
+           isBack={true}
+           title={t("editProfile")}
+           />
+   
+
+      <KeyboardAvoidingView
         style={styles.keyboardContainer}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
       >
+        <ScrollView
+          style={styles.whiteCard}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContent}
+        >
+          {renderInput('firstName', 'firstName', 'enterFirstName')}
+          {renderInput('lastName', 'lastName', 'enterLastName')}
+          {renderInput('mobileNo', 'mobileNo', 'enterMobileNo', 'phone-pad')}
+          {renderInput('email', 'email', 'enterEmail', 'email-address')}
+          {renderInput('dob', 'dateOfBirth', 'dob', 'default', true)}
+          {renderInput(
+            'anniversary',
+            'dateOfAnniversary',
+            'anniversary',
+            'default',
+            true,
+          )}
 
-
-          {/* White Content Card */}
-          <ScrollView 
-            style={styles.whiteCard}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.scrollContent}
+          <TouchableOpacity
+            style={styles.updateButton}
+            onPress={handleUpdateProfile}
+            activeOpacity={0.8}
           >
-            {renderInput('First Name', 'firstName', 'Enter first name')}
-            {renderInput('Last Name', 'lastName', 'Enter last name')}
-            {renderInput('Mobile No.', 'mobileNo', 'Enter mobile number', 'phone-pad')}
-            {renderInput('Email', 'email', 'Enter email address', 'email-address')}
-            {renderInput('Date of Birth', 'dateOfBirth', 'Date of Birth', 'default', true)}
-            {renderInput('Date of Anniversary', 'dateOfAnniversary', 'Date of Anniversary', 'default', true)}
-
-            {/* Update Button */}
-            <TouchableOpacity 
-              style={styles.updateButton}
-              onPress={handleUpdateProfile}
-              activeOpacity={0.8}
-            >
-              <Text style={styles.updateButtonText}>UPDATE PROFILE</Text>
-            </TouchableOpacity>
-          </ScrollView>
+            <Text style={styles.updateButtonText}>{t('updateProfile')}</Text>
+          </TouchableOpacity>
+        </ScrollView>
       </KeyboardAvoidingView>
-
-      {/* Bottom Indicator */}
-      <View style={styles.bottomIndicator} />
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.primary,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: widthPercentageToDP('5%'),
-    paddingVertical: heightPercentageToDP('2%'),
-    paddingTop: heightPercentageToDP('1%'),
-  },
-  backButton: {
-    width: widthPercentageToDP('10%'),
-    height: widthPercentageToDP('10%'),
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
-  headerCenter: {
-    alignItems: 'center',
-    flex: 1,
-  },
-  logoContainer: {
-    marginBottom: heightPercentageToDP('0.5%'),
-  },
-  logoText: {
-    fontSize: normalize(28),
-  },
-  companyName: {
-    color: COLORS.accent,
-    fontSize: FONT_SIZES.caption,
-    fontWeight: '600',
-  },
-  version: {
-    color: COLORS.text,
-    fontSize: FONT_SIZES.small,
-    fontWeight: '500',
-    width: widthPercentageToDP('15%'),
-    textAlign: 'right',
-  },
-  keyboardContainer: {
-    flex: 1,
-    paddingVertical: heightPercentageToDP('2%'),
-    paddingHorizontal: widthPercentageToDP('5%'),
+const getStyles = isTamil => {
+  const fontRegular = {
+    fontFamily: isTamil ? FONTS.NotoSansTamilRegular : FONTS.PoppinsRegular,
+  };
+  const fontMedium = {
+    fontFamily: isTamil ? FONTS.NotoSansTamilMedium : FONTS.PoppinsMedium,
+  };
+  const fontBold = {
+    fontFamily: isTamil ? FONTS.NotoSansTamilBold : FONTS.PoppinsBold,
+  };
 
-  },
-  goldenCard: {
-    flex: 1,
-    borderTopLeftRadius: widthPercentageToDP('8%'),
-    borderTopRightRadius: widthPercentageToDP('8%'),
-    marginTop: heightPercentageToDP('2%'),
-    paddingTop: heightPercentageToDP('3%'),
-    paddingHorizontal: widthPercentageToDP('5%'),
-  },
-  cardTitle: {
-    color: COLORS.textDark,
-    fontSize: FONT_SIZES.extraLarge,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: heightPercentageToDP('3%'),
-  },
-  whiteCard: {
-    flex: 1,
-    backgroundColor: COLORS.secondary,
-    borderRadius: widthPercentageToDP('6%'),
-    paddingHorizontal: widthPercentageToDP('5%'),
-  },
-  scrollContent: {
-    paddingVertical: heightPercentageToDP('1.5%'),
-    paddingBottom: heightPercentageToDP('5%'),
-  },
-  inputContainer: {
-    marginBottom: heightPercentageToDP('2.5%'),
-  },
-  inputLabel: {
-    color: COLORS.textSecondary,
-    fontSize: FONT_SIZES.caption,
-    fontWeight: '500',
-    marginBottom: heightPercentageToDP('1%'),
-    marginLeft: widthPercentageToDP('2%'),
-  },
-  textInput: {
-    backgroundColor: COLORS.inputBackground,
-    borderWidth: 1.5,
-    borderColor: COLORS.inputBorder,
-    borderRadius: widthPercentageToDP('4%'),
-    paddingHorizontal: widthPercentageToDP('4%'),
-    paddingVertical: heightPercentageToDP('1.8%'),
-    fontSize: FONT_SIZES.body,
-    color: COLORS.textDark,
-    minHeight: heightPercentageToDP('6.5%'),
-  },
-  dateInput: {
-    backgroundColor: COLORS.inputBackground,
-    borderWidth: 1.5,
-    borderColor: COLORS.inputBorder,
-    borderRadius: widthPercentageToDP('4%'),
-    paddingHorizontal: widthPercentageToDP('4%'),
-    paddingVertical: heightPercentageToDP('1.8%'),
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    minHeight: heightPercentageToDP('6.5%'),
-  },
-  dateInputText: {
-    fontSize: FONT_SIZES.body,
-    color: COLORS.textDark,
-    flex: 1,
-  },
-  placeholderText: {
-    color: COLORS.textPlaceholder,
-  },
-  inputFocused: {
-    borderColor: COLORS.inputFocus,
-    borderWidth: 2,
-  },
-    loginHeader: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: COLORS.theme,
-    height: heightPercentageToDP('12%'),
-    borderBottomLeftRadius: widthPercentageToDP('15%'),
-    borderBottomRightRadius: widthPercentageToDP('15%'),
-    paddingTop: heightPercentageToDP('5%'),
-    gap: widthPercentageToDP('26%'),
-  },
-  logo: {
-    width: widthPercentageToDP('40%'),
-    height: widthPercentageToDP('20%'),
-    marginBottom: heightPercentageToDP('1%'),
-  },
-  loginHeaderText: {
-    color: COLORS.textLight,
-    fontSize: FONT_SIZES.subtitle,
-    fontFamily: FONTS.PoppinsBold,
-    alignSelf: 'center',
-  },
-  updateButton: {
-    backgroundColor: COLORS.theme,
-    borderRadius: widthPercentageToDP('6%'),
-    paddingVertical: heightPercentageToDP('2.2%'),
-    alignItems: 'center',
-    // marginTop: heightPercentageToDP('3%'),
-    shadowColor: COLORS.primary,
-    shadowOffset: {
-      width: 0,
-      height: 4,
+  return StyleSheet.create({
+    container: { flex: 1, backgroundColor: COLORS.primary },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: widthPercentageToDP('4%'),
+      height: heightPercentageToDP('10%'),
+      backgroundColor: COLORS.theme,
+      borderBottomLeftRadius: 30,
+      borderBottomRightRadius: 30,
     },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
-            shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-  },
-  updateButtonText: {
-    color: COLORS.textLight,
-    fontSize: FONT_SIZES.body,
-    fontWeight: 'bold',
-    letterSpacing: 1,
-  },
-  bottomIndicator: {
-    width: widthPercentageToDP('30%'),
-    height: heightPercentageToDP('0.6%'),
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    borderRadius: heightPercentageToDP('0.3%'),
-    alignSelf: 'center',
-    marginBottom: heightPercentageToDP('1%'),
-  },
-});
+    headerText: {
+      color: COLORS.textLight,
+      fontSize: FONT_SIZES.subtitle,
+      ...fontBold,
+    },
+    langButton: {
+      borderWidth: 1,
+      borderColor: COLORS.white,
+      borderRadius: 5,
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+    },
+    langButtonText: { color: COLORS.white, ...fontMedium },
+    keyboardContainer: { flex: 1, padding: widthPercentageToDP('4%') },
+    whiteCard: {
+      flex: 1,
+      backgroundColor: COLORS.secondary,
+      borderRadius: 20,
+      padding: widthPercentageToDP('4%'),
+    },
+    scrollContent: { paddingBottom: heightPercentageToDP('2%') },
+    inputContainer: { marginBottom: heightPercentageToDP('2.5%') },
+    inputLabel: {
+      color: COLORS.textSecondary,
+      fontSize: FONT_SIZES.caption,
+      ...fontMedium,
+      marginBottom: heightPercentageToDP('1%'),
+      marginLeft: widthPercentageToDP('2%'),
+    },
+    textInput: {
+      backgroundColor: COLORS.inputBackground,
+      borderWidth: 1.5,
+      borderColor: COLORS.inputBorder,
+      borderRadius: 15,
+      paddingHorizontal: widthPercentageToDP('4%'),
+      paddingVertical: heightPercentageToDP('1.8%'),
+      fontSize: FONT_SIZES.body,
+      color: COLORS.textDark,
+      minHeight: heightPercentageToDP('6.5%'),
+      ...fontRegular,
+    },
+    dateInput: {
+      backgroundColor: COLORS.inputBackground,
+      borderWidth: 1.5,
+      borderColor: COLORS.inputBorder,
+      borderRadius: 15,
+      paddingHorizontal: widthPercentageToDP('4%'),
+      paddingVertical: heightPercentageToDP('1.8%'),
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      minHeight: heightPercentageToDP('6.5%'),
+    },
+    dateInputText: {
+      fontSize: FONT_SIZES.body,
+      color: COLORS.textDark,
+      flex: 1,
+      ...fontRegular,
+    },
+    placeholderText: { color: COLORS.textPlaceholder },
+    inputFocused: { borderColor: COLORS.inputFocus, borderWidth: 2 },
+    updateButton: {
+      backgroundColor: COLORS.theme,
+      borderRadius: 15,
+      paddingVertical: heightPercentageToDP('2%'),
+      alignItems: 'center',
+      marginTop: heightPercentageToDP('2%'),
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 5,
+      elevation: 5,
+    },
+    updateButtonText: {
+      color: COLORS.textLight,
+      fontSize: FONT_SIZES.body,
+      ...fontBold,
+      letterSpacing: 1,
+    },
+  });
+};
 
 export default EditProfile;

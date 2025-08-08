@@ -75,7 +75,14 @@
   "instalment": "Instalment",
   "discountRate": "Discount Rate",
   "approxWeight": "Approx Weight",
-  "payNow": "PAY NOW"
+  "payNow": "PAY NOW",
+   "firstName": "First Name",
+  "lastName": "Last Name",
+  "enterFirstName": "Enter first name",
+  "enterLastName": "Enter last name",
+  "enterMobileNo": "Enter mobile number",
+  "enterEmail": "Enter email address",
+  "updateProfile": "UPDATE PROFILE"
   
   
 }
