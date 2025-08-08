@@ -92,5 +92,11 @@
   "pdf": "PDF",
   "success": "வெற்றி",
   "pending": "நிலுவையில்",
-  "failed": "தோல்வி"
+  "failed": "தோல்வி",
+  "forgotMpinTitle": "MPIN மறந்துவிட்டதா?",
+  "changeMpinTitle": "MPIN மாற்று",
+  "enterMpin": "MPIN ஐ உள்ளிடவும்",
+  "confirmMpin": "MPIN ஐ உறுதிப்படுத்தவும்",
+  "change": "மாற்று",
+  "submit": "சமர்ப்பி"
 }

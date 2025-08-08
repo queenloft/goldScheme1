@@ -350,12 +350,12 @@ const getStyles = isTamil => {
       flexDirection: 'row',
       flexWrap: 'wrap',
       justifyContent: 'space-around',
-      paddingHorizontal: widthPercentageToDP('4%'),
+      paddingHorizontal: widthPercentageToDP('2%'),
       marginTop: heightPercentageToDP('3%'),
     },
     actionIconContainer: {
       alignItems: 'center',
-      width: isTamil? widthPercentageToDP('40%'): widthPercentageToDP('20%'),
+      width: isTamil? widthPercentageToDP('40%'): widthPercentageToDP('23%'),
     },
     actionIconCircle: {
       width: widthPercentageToDP('15%'),

@@ -9,6 +9,7 @@ import {
   StatusBar,
   Image,
   TextInput,
+  Pressable,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -19,36 +20,41 @@ import {
   COLORS,
 } from '@src/config/index';
 import RenderIcon from '@src/components/icon';
+import { useTranslation } from 'react-i18next';
+import Header from '@src/components/header';
 
-const ChangeMpinScreen = ({route}) => {
+const ChangeMpinScreen = ({ route }) => {
   const navigation = useNavigation();
-  const {title= 'Forgot MPIN?'} = route.params;
+  const { t, i18n } = useTranslation();
+  const isTamil = i18n.language === 'ta';
+  const styles = getStyles(isTamil);
+
+  const { titleKey = 'forgotMpinTitle' } = route?.params || {};
   const [mpin, setMpin] = useState(null);
-  const [confirmMpin, setConfirmMpin] = useState(['', '', '', '']);
-  // --- Custom MPIN Input Component ---
-  const MpinInput = ({ setMpin }) => {
+  const [confirmMpin, setConfirmMpin] = useState(null);
+
+  const MpinInput = ({ onMpinSet }) => {
     const [pin, setPin] = useState(['', '', '', '']);
     const inputs = useRef([]);
 
     const handleChange = (text, index) => {
-      if (!/^\d*$/.test(text)) return; // Only allow numbers
+      if (!/^\d*$/.test(text)) return;
 
-      const updatedPin = [...pin];
-      updatedPin[index] = text;
-      setPin(updatedPin);
+      const newPin = [...pin];
+      newPin[index] = text;
+      setPin(newPin);
 
       if (text && index < 3) {
         inputs.current[index + 1].focus();
-      } else if (index == 3 && text) {
-        setMpin(pin);
+      } else if (text && index === 3) {
+        onMpinSet(newPin.join(''));
+        inputs.current[index].blur();
       }
     };
 
     const handleKeyPress = (e, index) => {
-      if (e.nativeEvent.key === 'Backspace' && pin[index] === '') {
-        if (index > 0) {
-          inputs.current[index - 1].focus();
-        }
+      if (e.nativeEvent.key === 'Backspace' && pin[index] === '' && index > 0) {
+        inputs.current[index - 1].focus();
       }
     };
 
@@ -64,8 +70,6 @@ const ChangeMpinScreen = ({route}) => {
             onKeyPress={e => handleKeyPress(e, i)}
             keyboardType="number-pad"
             maxLength={1}
-            returnKeyType="next"
-            blurOnSubmit={false}
             secureTextEntry
           />
         ))}
@@ -76,18 +80,7 @@ const ChangeMpinScreen = ({route}) => {
   return (
     <SafeAreaView style={styles.root}>
       <StatusBar barStyle="light-content" backgroundColor={COLORS.theme} />
-      <View style={styles.loginHeader}>
-        <RenderIcon
-          name="arrow-back"
-          color={COLORS.secondary}
-          size={24}
-          onPress={() => navigation.goBack()}
-          style={{
-            paddingLeft: 32,
-          }}
-        />
-        <Text style={styles.loginHeaderText}>{title}</Text>
-      </View>
+      <Header isBack={true} title={t('forgotMpinTitle')} />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.mpinCard}>
           <Image
@@ -96,19 +89,17 @@ const ChangeMpinScreen = ({route}) => {
             }}
             style={styles.mpinIllustration}
           />
-
           <Text style={styles.mpinLabel}>
-            {mpin ? 'Confirm MPIN' : 'Enter MPIN'}
+            {mpin ? t('confirmMpin') : t('enterMpin')}
           </Text>
           {mpin === null ? (
-            <MpinInput pin={mpin} setMpin={setMpin} />
+            <MpinInput onMpinSet={setMpin} />
           ) : (
-            <MpinInput pin={confirmMpin} setMpin={setConfirmMpin} />
+            <MpinInput onMpinSet={setConfirmMpin} />
           )}
-
           <TouchableOpacity style={styles.changeButton}>
             <Text style={styles.changeButtonText}>
-              {mpin ? 'Submit' : 'Change'}
+              {mpin ? t('submit') : t('change')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -117,78 +108,95 @@ const ChangeMpinScreen = ({route}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: COLORS.secondary },
-  mpinCard: {
-    backgroundColor: COLORS.secondary,
-    margin: widthPercentageToDP('4%'),
-    borderRadius: 25,
-    padding: widthPercentageToDP('6%'),
-    alignItems: 'center',
-  },
-  mpinIllustration: {
-    width: widthPercentageToDP('70%'),
-    height: heightPercentageToDP('25%'),
-    marginBottom: heightPercentageToDP('3%'),
-  },
-  mpinLabel: {
-    fontFamily: FONTS.PoppinsSemiBold,
-    fontSize: FONT_SIZES.subtitle,
-    color: COLORS.text,
-    marginBottom: heightPercentageToDP('2%'),
-  },
-  mpinContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    marginBottom: heightPercentageToDP('3%'),
-  },
-  mpinBox: {
-    width: widthPercentageToDP('16%'),
-    height: widthPercentageToDP('16%'),
-    borderWidth: 1,
-    borderColor: COLORS.textSecondary,
-    borderRadius: 15,
-    textAlign: 'center',
-    fontSize: FONT_SIZES.title,
-    fontFamily: FONTS.PoppinsBold,
-    color: COLORS.text,
-  },
-  changeButton: {
-    backgroundColor: COLORS.theme,
-    borderRadius: 15,
-    paddingVertical: heightPercentageToDP('2%'),
-    alignItems: 'center',
-    width: '100%',
-    marginTop: heightPercentageToDP('2%'),
-  },
-  loginHeader: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: COLORS.theme,
-    height: heightPercentageToDP('12%'),
-    borderBottomLeftRadius: widthPercentageToDP('15%'),
-    borderBottomRightRadius: widthPercentageToDP('15%'),
-    paddingTop: heightPercentageToDP('5%'),
-    gap: widthPercentageToDP('26%'),
-  },
-  logo: {
-    width: widthPercentageToDP('40%'),
-    height: widthPercentageToDP('20%'),
-    marginBottom: heightPercentageToDP('1%'),
-  },
-  loginHeaderText: {
-    color: COLORS.textLight,
-    fontSize: FONT_SIZES.subtitle,
-    fontFamily: FONTS.PoppinsBold,
-    alignSelf: 'center',
-  },
-  changeButtonText: {
-    color: COLORS.textLight,
-    fontFamily: FONTS.PoppinsBold,
-    fontSize: FONT_SIZES.body,
-  },
-});
+const getStyles = isTamil => {
+  const fontRegular = {
+    fontFamily: isTamil ? FONTS.NotoSansTamilRegular : FONTS.PoppinsRegular,
+  };
+  const fontMedium = {
+    fontFamily: isTamil ? FONTS.NotoSansTamilMedium : FONTS.PoppinsMedium,
+  };
+  const fontSemiBold = {
+    fontFamily: isTamil ? FONTS.NotoSansTamilSemiBold : FONTS.PoppinsSemiBold,
+  };
+  const fontBold = {
+    fontFamily: isTamil ? FONTS.NotoSansTamilBold : FONTS.PoppinsBold,
+  };
+
+  return StyleSheet.create({
+    root: { flex: 1, backgroundColor: COLORS.secondary },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      backgroundColor: COLORS.theme,
+      height: heightPercentageToDP('12%'),
+      borderBottomLeftRadius: 30,
+      borderBottomRightRadius: 30,
+      paddingHorizontal: widthPercentageToDP('4%'),
+    },
+    headerText: {
+      color: COLORS.textLight,
+      fontSize: FONT_SIZES.subtitle,
+      ...fontBold,
+    },
+    langButton: {
+      borderWidth: 1,
+      borderColor: COLORS.white,
+      borderRadius: 5,
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+    },
+    langButtonText: { color: COLORS.white, ...fontMedium },
+    scrollContainer: { flexGrow: 1, },
+    mpinCard: {
+      backgroundColor: COLORS.secondary,
+      margin: widthPercentageToDP('4%'),
+      borderRadius: 25,
+      padding: widthPercentageToDP('6%'),
+      alignItems: 'center'
+    },
+    mpinIllustration: {
+      width: widthPercentageToDP('60%'),
+      height: heightPercentageToDP('20%'),
+      marginBottom: heightPercentageToDP('3%'),
+      resizeMode: 'contain',
+    },
+    mpinLabel: {
+      ...fontSemiBold,
+      fontSize: FONT_SIZES.subtitle,
+      color: COLORS.text,
+      marginBottom: heightPercentageToDP('3%'),
+    },
+    mpinContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      width: '90%',
+      marginBottom: heightPercentageToDP('4%'),
+    },
+    mpinBox: {
+      width: widthPercentageToDP('15%'),
+      height: widthPercentageToDP('15%'),
+      borderWidth: 1.5,
+      borderColor: COLORS.textSecondary,
+      borderRadius: 15,
+      textAlign: 'center',
+      fontSize: FONT_SIZES.title,
+      ...fontBold,
+      color: COLORS.text,
+    },
+    changeButton: {
+      backgroundColor: COLORS.theme,
+      borderRadius: 15,
+      paddingVertical: heightPercentageToDP('2%'),
+      alignItems: 'center',
+      width: '100%',
+    },
+    changeButtonText: {
+      color: COLORS.textLight,
+      ...fontBold,
+      fontSize: FONT_SIZES.body,
+    },
+  });
+};
 
 export default ChangeMpinScreen;

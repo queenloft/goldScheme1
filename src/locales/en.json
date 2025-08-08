@@ -18,7 +18,7 @@
   "joinPlan": "Join Plan",
   "myPlan": "My Plan",
   "myProfile": "My Profile",
-  "notifications": "Notifications",
+  "notifications": "Notification",
   "latestTransactions": "Latest Transactions",
   "seeAll": "See All",
   "monthlyScheme": "MONTHLY SCHEME",
@@ -92,7 +92,13 @@
   "pdf": "PDF",
   "success": "SUCCESS",
   "pending": "PENDING",
-  "failed": "FAILED"
+  "failed": "FAILED",
+   "forgotMpinTitle": "Forgot MPIN?",
+  "changeMpinTitle": "Change MPIN",
+  "enterMpin": "Enter MPIN",
+  "confirmMpin": "Confirm MPIN",
+  "change": "Change",
+  "submit": "Submit"
   
   
 }

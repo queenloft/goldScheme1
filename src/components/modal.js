@@ -1,10 +1,13 @@
 import { COLORS } from '@src/config';
 import React, { useState } from 'react';
 import { Modal, StyleSheet, Text, View, Pressable, Image, StatusBar } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import useLanguageStore from '@src/hooks/useLanguageStore';
 
 // --- Reusable Modal Component ---
 // This component can be used anywhere in your app.
 const CustomModal = ({ modalVisible, setModalVisible, onConfirm, onCancel }) => {
+    const { t } = useTranslation();
   return (
     <Modal
       animationType="fade"
@@ -15,18 +18,18 @@ const CustomModal = ({ modalVisible, setModalVisible, onConfirm, onCancel }) => 
       }}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <Text style={styles.modalTitle}>Need your attention</Text>
-          <Text style={styles.modalText}>Are you sure you want to logout your account?</Text>
+          <Text style={styles.modalTitle}>{t("logoutConfirmTitle")}</Text>
+          <Text style={styles.modalText}>{t("logoutConfirmMessage")}</Text>
           <View style={styles.buttonContainer}>
             <Pressable
               style={[styles.button, styles.buttonYes]}
               onPress={onConfirm}>
-              <Text style={styles.textStyleYes}>YES</Text>
+              <Text style={styles.textStyleYes}>{t("yes")}</Text>
             </Pressable>
             <Pressable
               style={[styles.button, styles.buttonNo]}
               onPress={onCancel}>
-              <Text style={styles.textStyleNo}>NO</Text>
+              <Text style={styles.textStyleNo}>{t("no")}</Text>
             </Pressable>
           </View>
         </View>

@@ -44,7 +44,6 @@ export default function ProfileScreen({ route }) {
   const { t, i18n } = useTranslation();
   const isTamil = i18n.language === 'ta';
   const styles = getStyles(isTamil);
-console.log(route)
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleLogoutConfirm = () => {

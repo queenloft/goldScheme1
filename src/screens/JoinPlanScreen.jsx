@@ -9,6 +9,7 @@ import {
   Dimensions,
   StatusBar,
   ImageBackground,
+  Image
 } from 'react-native';
 import {
   FONTS,
@@ -24,7 +25,8 @@ import RenderIcon from '@src/components/icon';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import Header from '@src/components/header';
-
+import Gold from '@assets/gold.jpg';
+import Silver from '@assets/silver.png';
 // Mock scheme data
 const schemeData = [
   {
@@ -115,11 +117,15 @@ const JoinScheme = () => {
                 </Text>
               </View>
               <View style={styles.digiGoldRight}>
-                <View style={styles.phoneContainer}>
-                  <View style={styles.phoneScreen}>
-                    <Text style={styles.piggyBank}>🏦</Text>
-                  </View>
-                </View>
+                
+                  
+  <Image
+                source={Gold}
+                style={styles.balanceIcon}
+                resizeMode="cover"
+              />
+                               
+               
               </View>
             </View>
           </View>
@@ -331,6 +337,11 @@ const getStyles = isTamil => {
       backgroundColor: COLORS.primary,
       borderRadius: 15,
       padding: 5,
+    },
+        balanceIcon: {
+      width: 100,
+      height: 80,
+      borderRadius: 20,
     },
     phoneScreen: {
       flex: 1,

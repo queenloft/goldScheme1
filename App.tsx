@@ -19,7 +19,6 @@ import TransactionsScreen from '@src/screens/MyTransactions';
 import PaymentScreen from '@src/screens/Payment';
 import NotificationScreen from '@src/screens/Notifications';
 import useAuthStore from '@src/hooks/useAuthStore';
-import firebase from '@react-native-firebase/app';
 import '@src/utility/i18n'; // This import initializes i18next
 import { useTranslation } from 'react-i18next';
 import useLanguageStore from '@src/hooks/useLanguageStore';
@@ -57,7 +56,6 @@ function App() {
             <Stack.Screen name="MyTransactions" component={TransactionsScreen} />
             <Stack.Screen name="Payment" component={PaymentScreen} />
             <Stack.Screen name="Notifications" component={NotificationScreen} />
-            {/* OTPScreen might still be needed here for actions like "Forgot MPIN" */}
             <Stack.Screen name="OTPScreen" component={OTPScreen} />
           </>
         ) : (
