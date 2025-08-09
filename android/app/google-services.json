@@ -12,7 +12,20 @@
           "package_name": "com.vipinfotech.goldscheme"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "819096658243-3jjf4eog15ila491apv72aji109ln7nf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vipinfotech.goldscheme",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "819096658243-t3dc9rpu0mqpr9c35lu63vgmuaghfnq1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAWcHyIv3n5lAlimiEppM72keIL7nYN7Ts"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "819096658243-t3dc9rpu0mqpr9c35lu63vgmuaghfnq1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

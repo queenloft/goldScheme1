@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 import useLanguageStore from '@src/hooks/useLanguageStore';
 
 // NOTE: Firebase imports are commented out as they can't run in this environment, but they are correct for your project.
-// import { signInWithPhoneNumber, getAuth } from '@react-native-firebase/auth';
+import { signInWithPhoneNumber, getAuth } from '@react-native-firebase/auth';
 // import firestore from '@react-native-firebase/firestore';
 // --- END MOCK ---
 
@@ -85,13 +85,13 @@ const LoginScreen = ({ navigation }) => {
     try {
       console.log('Attempting to send OTP to +91' + mobileNumber);
       // In your real app, the Firebase logic would be here
-      // const authInstance = getAuth();
-      // const otpSentResponse = await signInWithPhoneNumber(authInstance, '+91' + mobileNumber);
-      // if (otpSentResponse) {
-      //   navigation.navigate('OTPScreen', { otpSentResponse });
-      // } else {
-      //   showAlert(t('otpFailedTitle'), 'Failed to send OTP. Please try again.');
-      // }
+      const authInstance = getAuth();
+      const otpSentResponse = await signInWithPhoneNumber(authInstance, '+91' + mobileNumber);
+      if (otpSentResponse) {
+        navigation.navigate('OTPScreen', { otpSentResponse,mobileNumber });
+      } else {
+        showAlert(t('otpFailedTitle'), 'Failed to send OTP. Please try again.');
+      }
       console.log("Simulating OTP sent successfully.");
       // Simulating navigation for demo
       // navigation.navigate('OTPScreen', { otpSentResponse: { verificationId: 'mock_verification_id' } });

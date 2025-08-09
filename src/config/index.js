@@ -32,7 +32,8 @@ export const FONTS = {
 }
 
 export const CONSTANTS = {
-  appName:"GRT gold jewellers"
+  appName:"GRT gold jewellers",
+  __app_id:"goldscheme-b4f0e"
 }
 
 export const COLORS = {

@@ -25,6 +25,7 @@ import RenderIcon from '@src/components/icon';
 import useAuthStore from '@src/hooks/useAuthStore';
 import { useTranslation } from 'react-i18next';
 import Header from '@src/components/header';
+import auth from '@react-native-firebase/auth';
 
 // --- Mock Data ---
 // In a real app, this data would come from your user state or API
@@ -46,8 +47,9 @@ export default function ProfileScreen({ route }) {
   const styles = getStyles(isTamil);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const handleLogoutConfirm = () => {
+  const handleLogoutConfirm = async () => {
     console.log('Logout confirmed.');
+        await auth().signOut();
     setModalVisible(false);
     logout();
     navigation.replace('Login');
