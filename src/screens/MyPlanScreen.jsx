@@ -1,4 +1,4 @@
-import React, { useTransition } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -24,75 +24,29 @@ import RenderIcon from '@src/components/icon';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import Header from '@src/components/header';
-
-// Mock data for plan cards
-const mockPlanData = [
-  {
-    id: '1',
-    schemeType: 'MONTHLY SCHEME',
-    groupCode: 'AM-74',
-    paidAmount: 20000.0,
-    paidWeight: 2.22,
-    totalAmount: 240000.0,
-    totalWeight: 26.64,
-    progress: 8,
-    maturityDate: '13-Jun-2026',
-    joinDate: '18-Jul-2025',
-    status: 'Active',
-    cardColor: COLORS.cardBackground,
-  },
-  {
-    id: '2',
-    schemeType: 'QUARTERLY SCHEME',
-    groupCode: 'QT-42',
-    paidAmount: 45000.0,
-    paidWeight: 5.125,
-    totalAmount: 180000.0,
-    totalWeight: 20.5,
-    progress: 25,
-    maturityDate: '15-Dec-2025',
-    joinDate: '15-Mar-2025',
-    status: 'Active',
-    cardColor: COLORS.cardGradient1,
-  },
-  {
-    id: '3',
-    schemeType: 'YEARLY SCHEME',
-    groupCode: 'YR-18',
-    paidAmount: 150000.0,
-    paidWeight: 17.85,
-    totalAmount: 300000.0,
-    totalWeight: 35.7,
-    progress: 50,
-    maturityDate: '20-Aug-2027',
-    joinDate: '20-Aug-2024',
-    status: 'Active',
-    cardColor: COLORS.cardGradient2,
-  },
-  {
-    id: '4',
-    schemeType: 'FLEXIBLE SCHEME',
-    groupCode: 'FL-91',
-    paidAmount: 80000.0,
-    paidWeight: 9.24,
-    totalAmount: 120000.0,
-    totalWeight: 13.86,
-    progress: 67,
-    maturityDate: '10-Oct-2025',
-    joinDate: '10-Jan-2025',
-    status: 'Nearing',
-    cardColor: COLORS.cardGradient3,
-  },
-];
+import { listenToActivatedPlans } from '@src/services/firebase';
+import useAuthStore from '@src/hooks/useAuthStore';
 
 const GoldDashboard = () => {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
   const isTamil = i18n.language === 'ta';
   const styles = getStyles(isTamil);
+  const { user } = useAuthStore();
+  const [planData, setPlanData] = useState([]);
 
-  const totalSchemes = mockPlanData.length;
-  const balanceDue = mockPlanData.filter(plan => plan.progress < 100).length;
+  useEffect(() => {
+    if (!user) return;
+    const unsub = listenToActivatedPlans(user.uid, snapshot => {
+      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setPlanData(data);
+    });
+    return unsub;
+  }, [user]);
+
+  const totalSchemes = planData.length;
+  const balanceDue = planData.filter(plan => plan.progress < 100).length;
+
 
   const renderPlanCard = ({ item }) => (
     <View style={styles.cardContainer}>
@@ -239,7 +193,7 @@ const GoldDashboard = () => {
         </View>
 
         <FlatList
-          data={mockPlanData}
+          data={planData}
           renderItem={renderPlanCard}
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
