@@ -25,7 +25,7 @@ import useAuthStore from '@src/hooks/useAuthStore';
 
 const OTPScreen = ({
   route: {
-    params: { user, otpSentResponse },
+    params: { user, otpSentResponse, phone },
   },
 }) => {
   const { login } = useAuthStore();

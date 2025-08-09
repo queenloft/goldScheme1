@@ -12,22 +12,12 @@ import {
   Modal,
   Dimensions
 } from 'react-native';
-// --- MOCK: In your project, you would import these from your actual files ---
 import {FONTS, FONT_SIZES, SCREEN_HEIGHT, SCREEN_WIDTH, widthPercentageToDP, heightPercentageToDP, COLORS} from '@src/config/index'
-import useAuthStore from '@src/hooks/useAuthStore';
 import { useTranslation } from 'react-i18next';
 import useLanguageStore from '@src/hooks/useLanguageStore';
+import { signInWithPhone } from '@src/services/firebase';
 
-// NOTE: Firebase imports are commented out as they can't run in this environment, but they are correct for your project.
-// import { signInWithPhoneNumber, getAuth } from '@react-native-firebase/auth';
-// import firestore from '@react-native-firebase/firestore';
-// --- END MOCK ---
 
-const MOCK_USER = {
-  name: 'Sanjay Kumar',
-  totalInvestment: 150000.0,
-  totalGoldGrams: 20.68,
-};
 
 
 
@@ -58,7 +48,6 @@ const CustomAlert = ({ visible, title, message, onClose }) => (
 const LoginScreen = ({ navigation }) => {
   const [mobileNumber, setMobileNumber] = useState('');
   const { t, i18n } = useTranslation(); // In your app, use the real useTranslation()
-  const { login } = useAuthStore();
   const { language, setLanguage } = useLanguageStore();
 
   const [alertInfo, setAlertInfo] = useState({ visible: false, title: '', message: '' });
@@ -67,40 +56,21 @@ const LoginScreen = ({ navigation }) => {
     setAlertInfo({ visible: true, title, message });
   };
 
-  const handleLogin = () => {
-    if (mobileNumber.length !== 10) {
-      showAlert(t('invalidInputTitle'), t('invalidInputMessage'));
-      return;
-    }
-    console.log('Login attempt with:', mobileNumber);
-    login(MOCK_USER, "some_mock_token"); 
-    navigation.replace('MainApp');
-  };
-
-  const handleOTPLogin = async () => {
+  const handleLogin = async () => {
     if (mobileNumber.length !== 10) {
       showAlert(t('invalidInputTitle'), t('invalidInputMessage'));
       return;
     }
     try {
-      console.log('Attempting to send OTP to +91' + mobileNumber);
-      // In your real app, the Firebase logic would be here
-      // const authInstance = getAuth();
-      // const otpSentResponse = await signInWithPhoneNumber(authInstance, '+91' + mobileNumber);
-      // if (otpSentResponse) {
-      //   navigation.navigate('OTPScreen', { otpSentResponse });
-      // } else {
-      //   showAlert(t('otpFailedTitle'), 'Failed to send OTP. Please try again.');
-      // }
-      console.log("Simulating OTP sent successfully.");
-      // Simulating navigation for demo
-      // navigation.navigate('OTPScreen', { otpSentResponse: { verificationId: 'mock_verification_id' } });
-
+      const confirmation = await signInWithPhone('+91' + mobileNumber);
+      navigation.navigate('OTPScreen', { otpSentResponse: confirmation, phone: mobileNumber });
     } catch (error) {
-      console.log('Error in handleOTPLogin:', error);
+      console.log('Error in handleLogin:', error);
       showAlert(t('otpFailedTitle'), error.message);
     }
   };
+
+  const handleOTPLogin = handleLogin;
 
   const isTamil = language === 'ta';
   const styles = getStyles(isTamil);

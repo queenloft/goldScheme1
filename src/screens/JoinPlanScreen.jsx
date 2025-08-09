@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -25,59 +25,35 @@ import RenderIcon from '@src/components/icon';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import Header from '@src/components/header';
+import { listenToSchemes, joinScheme } from '@src/services/firebase';
+import useAuthStore from '@src/hooks/useAuthStore';
 import Gold from '@assets/gold.jpg';
 import Silver from '@assets/silver.png';
-// Mock scheme data
-const schemeData = [
-  {
-    id: '1',
-    type: 'DigiGold',
-    titleKey: 'Digi Gold',
-    subtitleKey: 'Daily Saving Scheme',
-    descriptionKey: 'Starting From Rs.100/-',
-    periodKey: 'Scheme Period 330 Days',
-    bgColor: COLORS.digiGoldBg,
-    textColor: COLORS.textDark,
-    hasPhone: true,
-  },
-  {
-    id: '2',
-    type: 'SwarnaMithra',
-    titleKey: 'SWARNA MITHRA',
-    subtitleKey: 'Start Saving Today !',
-    descriptionKey: 'Choose from flexible plan: Rs.1000/month,',
-    subDescriptionKey: 'Rs.500/week, or Rs 100/day',
-    bgColor: COLORS.swarnaGradient,
-    textColor: COLORS.textDark,
-    hasGradient: true,
-  },
-  {
-    id: '3',
-    type: 'SwarnaLabam',
-    titleKey: 'SWARNA LABAM',
-    subtitleKey: '11 Month Advance Deposit',
-    planA: {
-      titleKey: 'Plan A',
-      amountKey: 'Mini Rs.25,000/-',
-    },
-    planB: {
-      titleKey: 'Plan B',
-      amountKey: 'Mini Weight 4gram',
-    },
-    hasJewelry: true,
-    isAdvanced: true,
-  },
-];
 
 const JoinScheme = () => {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
   const isTamil = i18n.language === 'ta';
   const styles = getStyles(isTamil);
+  const { user } = useAuthStore();
+  const [schemes, setSchemes] = useState([]);
 
-  const handleJoinNow = scheme => {
-    console.log('Joining scheme:', scheme.type);
-    navigation.navigate('Payment');
+  useEffect(() => {
+    const unsub = listenToSchemes(snapshot => {
+      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setSchemes(data);
+    });
+    return unsub;
+  }, []);
+
+  const handleJoinNow = async scheme => {
+    if (!user) return;
+    try {
+      await joinScheme(user.uid, scheme.id);
+      navigation.navigate('Payment');
+    } catch (e) {
+      console.log("joinScheme error", e);
+    }
   };
 
   const renderSchemeCard = scheme => {
@@ -249,7 +225,7 @@ const JoinScheme = () => {
           style={styles.whiteCard}
           showsVerticalScrollIndicator={false}
         >
-          {schemeData.map(scheme => renderSchemeCard(scheme))}
+          {schemes.map(scheme => renderSchemeCard(scheme))}
         </ScrollView>
       </View>
     </SafeAreaView>
