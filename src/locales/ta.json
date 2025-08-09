@@ -98,5 +98,9 @@
   "enterMpin": "MPIN ஐ உள்ளிடவும்",
   "confirmMpin": "MPIN ஐ உறுதிப்படுத்தவும்",
   "change": "மாற்று",
-  "submit": "சமர்ப்பி"
+  "submit": "சமர்ப்பி",
+  "enterOTP": "க்கு அனுப்பப்பட்ட OTP-ஐ உள்ளிடவும்",
+  "resendOTP": "மீண்டும் OTP அனுப்பவும்",
+  "resendOTPIn": "மீண்டும் OTP அனுப்ப:",
+  "Verify": "சரிபார்க்கவும்"
 }

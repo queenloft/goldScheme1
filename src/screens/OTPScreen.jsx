@@ -25,7 +25,7 @@ import auth from '@react-native-firebase/auth';
 import firestore ,{ getDoc } from '@react-native-firebase/firestore';
 import useAuthStore from '@src/hooks/useAuthStore';
 import Header from '@src/components/header';
-
+import { useTranslation } from 'react-i18next';
 // --- Custom MPIN Input Component ---
 // This component now manages its own internal state and calls `onComplete` when all 6 digits are entered.
 const MpinInput = ({ onComplete }) => {
@@ -87,6 +87,8 @@ const OTPScreen = ({
 }) => {
   const { login } = useAuthStore();
   const navigation = useNavigation();
+    const { t, i18n } = useTranslation(); // In your app, use the real useTranslation()
+  
 
   // State for the OTP confirmation object, allowing it to be updated on resend
   const [otpSentResponse, setOtpSentResponse] = useState(initialOtpSentResponse);
@@ -183,7 +185,7 @@ const handleVerifyOTP = async () => {
 
     // Step 4: Update the global state. This will automatically trigger the navigator to change screens.
     console.log("Login state updated. Navigator should now switch to MainApp.");
-    // login(user, 'YOUR_TOKEN_HERE'); // Replace with actual token logic
+    login(user, user.uid); // Replace with actual token logic
 
   } catch (error) {
     // Step 5: Differentiate between Auth and Firestore errors for better debugging
@@ -215,22 +217,22 @@ const handleVerifyOTP = async () => {
             style={styles.mpinIllustration}
           />
 
-          <Text style={styles.mpinLabel}>Enter the OTP sent to {phone}</Text>
+          <Text style={styles.mpinLabel}>{t("enterOTP")} {phone}</Text>
 
           <MpinInput onComplete={setMpin} />
 
           <View style={styles.resendContainer}>
             {canResend ? (
               <TouchableOpacity onPress={handleResendOTP}>
-                <Text style={styles.resendButtonText}>Resend OTP</Text>
+                <Text style={styles.resendButtonText}>{t("resendOTP")}</Text>
               </TouchableOpacity>
             ) : (
-              <Text style={styles.timerText}>Resend OTP in {timer}s</Text>
+              <Text style={styles.timerText}>{t("resendOTPIn")} {timer}s</Text>
             )}
           </View>
 
           <TouchableOpacity style={styles.verifyButton} onPress={handleVerifyOTP}>
-            <Text style={styles.verifyButtonText}>Verify</Text>
+            <Text style={styles.verifyButtonText}>{t("Verify")}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

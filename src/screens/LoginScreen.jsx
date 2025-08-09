@@ -10,7 +10,8 @@ import {
   StatusBar,
   Image,
   Modal,
-  Dimensions
+  Dimensions,
+  KeyboardAvoidingView
 } from 'react-native';
 // --- MOCK: In your project, you would import these from your actual files ---
 import {FONTS, FONT_SIZES, SCREEN_HEIGHT, SCREEN_WIDTH, widthPercentageToDP, heightPercentageToDP, COLORS} from '@src/config/index'
@@ -107,6 +108,11 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.loginRoot}>
+      
+            <KeyboardAvoidingView
+              style={styles.loginScrollView}
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            >
       <StatusBar barStyle="light-content" backgroundColor={COLORS.theme} />
       
       <CustomAlert 
@@ -126,7 +132,7 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.loginHeaderText}>{t('saveGoldWithUs')}</Text>
       </View>
 
-      <ScrollView style={styles.loginScrollView} keyboardShouldPersistTaps="handled">
+      <ScrollView  keyboardShouldPersistTaps="handled">
         <View style={styles.loginContainer}>
           <Text style={styles.loginTitle}>{t('signIn')}</Text>
           <View style={styles.inputGroup}>
@@ -141,25 +147,12 @@ const LoginScreen = ({ navigation }) => {
               onChangeText={setMobileNumber}
             />
           </View>
-          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-            <Text style={styles.loginButtonText}>{t('login')}</Text>
-          </TouchableOpacity>
-          <Text style={styles.orText}>{t('or')}</Text>
-          <TouchableOpacity style={[styles.loginButton, styles.otpButton]} onPress={handleOTPLogin}>
-            <Text style={styles.otpButtonText}>{t('loginWithOtp')}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => console.log('Navigate to ChangeMpin')}>
-            <Text style={styles.forgotPasswordText}>{t('forgotMpin')}</Text>
+          <TouchableOpacity style={styles.loginButton} onPress={handleOTPLogin}>
+            <Text style={styles.loginButtonText}>{t('loginWithOtp')}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
-
-      <View style={styles.signUpContainer}>
-        <Text style={styles.signUpText}>{t('dontHaveAccount')}</Text>
-        <TouchableOpacity>
-          <Text style={[styles.signUpText, { color: COLORS.theme, fontFamily: isTamil ? FONTS.NotoSansTamilMedium : FONTS.PoppinsMedium }]}>{t('signUp')}</Text>
-        </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -176,7 +169,7 @@ const getStyles = (isTamil) => {
         loginScrollView: { flex: 1 },
         loginHeader: {
             backgroundColor: COLORS.theme,
-            height: heightPercentageToDP('25%'),
+            height: heightPercentageToDP('40%'),
             justifyContent: 'center',
             alignItems: 'center',
             borderBottomLeftRadius: widthPercentageToDP('15%'),
@@ -218,8 +211,9 @@ const getStyles = (isTamil) => {
         loginContainer: {
             flex: 1,
             justifyContent: 'flex-start',
+            gap:24,
             paddingHorizontal: widthPercentageToDP('8%'),
-            paddingTop: heightPercentageToDP('3%'),
+            paddingTop: heightPercentageToDP('6%'),
         },
         loginTitle: {
             fontSize: FONT_SIZES.title,
@@ -234,7 +228,7 @@ const getStyles = (isTamil) => {
         label: {
             color: COLORS.textSecondary,
             fontSize: FONT_SIZES.caption,
-            marginBottom: 5,
+            marginBottom: 16,
             ...fontRegular,
         },
         input: {

@@ -98,7 +98,11 @@
   "enterMpin": "Enter MPIN",
   "confirmMpin": "Confirm MPIN",
   "change": "Change",
-  "submit": "Submit"
+  "submit": "Submit",
+  "enterOTP":"Enter the OTP sent to",
+  "resendOTP":"Resend OTP",
+  "resendOTPIn":"Resend OTP in",
+  "Verify":"Verify"
   
   
 }
